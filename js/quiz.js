@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const resultData = {
         ecoHero: {
-            title: "🌿 Eco Hero",
+            title: "1st - 🌿 Eco Hero",
             message: "Outstanding! You’re a true environmental leader — keep inspiring others.",
             tips: [
                 "Share your practices on social media to influence your network.",
@@ -74,17 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
             className: 'eco-hero'
         },
         ecoAware: {
-            title: "🌱 Eco Aware",
+            title: "2nd - 🌱 Eco Aware",
             message: "Great job! You’re on the right track — small tweaks can make a big impact.",
             tips: [
                 "Switch to 100% renewable energy sources if possible.",
-                "Reduce meat consumption even further.",
+                "Choose locally grown and seasonal produce to cut transport emissions.",
                 "Commit to a “buy nothing new” challenge for a month."
             ],
             className: 'eco-aware'
         },
         ecoLearner: {
-            title: "🍂 Eco Learner",
+            title: "3rd - 🍂 Eco Learner",
             message: "You care, but there’s room to grow — your small daily actions can create big change.",
             tips: [
                 "Start recycling and composting at home.",
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
             className: 'eco-learner'
         },
         ecoRisk: {
-            title: "🔥 Eco Risk Zone",
+            title: "4th - 🔥 Eco Risk Zone",
             message: "Your lifestyle is having a heavy impact — urgent action needed!",
             tips: [
                 "Begin with one habit: recycle all plastic and paper waste.",
@@ -110,8 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const quizHeader = document.getElementById('quiz-header');
     const questionArea = document.getElementById('question-area');
     const resultsContainer = document.getElementById('results-container');
-    const missionSection = document.getElementById('mission-section-quiz');
     const progressBar = document.getElementById('progress-bar');
+    // REMOVED: const missionSection = document.getElementById('mission-section-quiz');
     
     let currentQuestionIndex = 0;
     let totalScore = 0;
@@ -185,7 +185,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
         
-        // Show the mission section after the results
-        missionSection.classList.remove('hidden');
+        // REMOVED: missionSection.classList.remove('hidden');
     }
 });

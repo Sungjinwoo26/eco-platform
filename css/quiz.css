@@ -125,6 +125,22 @@
     display: none !important;
 }
 
+/* --- NEW STYLES FOR MISSION SECTION ON QUIZ PAGE --- */
 #mission-section-quiz {
-    margin-top: 4rem;
+    background-color: var(--secondary-color);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    margin-top: 4rem; /* Ensures space below quiz/results */
+    display: flex; /* Overriding default block display */
+    align-items: center;
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    #mission-section-quiz {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem;
+    }
 }
