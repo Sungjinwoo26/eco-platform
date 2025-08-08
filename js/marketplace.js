@@ -1,46 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dummy product data with unique IDs
+    // Dummy product data with unique IDs and local image paths
     const products = [
         {
             id: 'prod-001',
             name: 'HEPA Air Purifier',
             price: 8999,
-            image: 'https://images.unsplash.com/photo-1623122175342-6a75a7c21b22?w=500&auto=format&fit=crop',
+            image: 'assets/images/HEPA Air Purifier.jpeg',
             description: 'Removes 99.97% of airborne particles. Ideal for bedrooms and offices.'
         },
         {
             id: 'prod-002',
             name: 'Insulated Steel Water Bottle',
             price: 1299,
-            image: 'https://images.unsplash.com/photo-1602143407151-24741630d173?w=500&auto=format&fit=crop',
+            image: 'assets/images/Insulated Steel Water Bottle.webp',
             description: 'Keep drinks cold for 24 hours or hot for 12. BPA-free.'
         },
         {
             id: 'prod-003',
             name: 'Air Purifying Spider Plant',
             price: 499,
-            image: 'https://images.unsplash.com/photo-1619069452588-6638f37b1206?w=500&auto=format&fit=crop',
+            image: 'assets/images/Air Purifying Spider Plant.webp',
             description: 'Easy to care for and excellent at removing toxins from the air.'
         },
         {
             id: 'prod-004',
             name: 'Portable Solar Charger',
             price: 2499,
-            image: 'https://images.unsplash.com/photo-1593592415514-a51b36585542?w=500&auto=format&fit=crop',
+            image: 'assets/images/Portable Solar Charger.jpg',
             description: 'Charge your devices on the go with the power of the sun.'
         },
         {
             id: 'prod-005',
             name: 'Bamboo Toothbrush (Pack of 4)',
             price: 299,
-            image: 'https://images.unsplash.com/photo-1627620259924-118d3b4822ed?w=500&auto=format&fit=crop',
+            image: 'assets/images/Bamboo Toothbrush (Pack of 4).jpg',
             description: 'A sustainable alternative to plastic toothbrushes. 100% biodegradable.'
         },
         {
             id: 'prod-006',
             name: 'Kitchen Compost Bin',
             price: 1999,
-            image: 'https://images.unsplash.com/photo-1598179971029-7d84813f6323?w=500&auto=format&fit=crop',
+            image: 'assets/images/Kitchen Compost Bin.jpg',
             description: 'Stylish and odorless bin to recycle your kitchen scraps into compost.'
         }
     ];
