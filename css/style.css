@@ -34,7 +34,7 @@ a:hover {
 }
 
 main {
-    padding-top: 70px; /* Adjust for fixed header */
+    padding-top: 90px; /* Increased for desktop view */
 }
 
 footer {
@@ -326,9 +326,9 @@ spline-viewer {
 
 /* --- Responsive Styles for Mobile --- */
 @media (max-width: 768px) {
-    /* Adjust main content padding if needed */
+    /* Adjust main content padding for the mobile nav bar */
     main {
-        padding-top: 70px;
+        padding-top: 85px; /* Increased for mobile view */
     }
     
     .nav-links {
