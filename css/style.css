@@ -378,6 +378,22 @@ spline-viewer {
 .cart-container {
     position: relative;
 }
+
+/* --- NEW: Eco-Type Badge --- */
+.eco-badge {
+    display: none; /* Hidden by default */
+    font-size: 1.5rem; /* Same size as cart-button */
+    text-decoration: none;
+    padding: 0 5px;
+    cursor: pointer;
+}
+
+/* Define the emoji content for each type */
+.eco-badge.eco-hero::before { content: '🌿'; }
+.eco-badge.eco-aware::before { content: '🌱'; }
+.eco-badge.eco-learner::before { content: '🍂'; }
+.eco-badge.eco-risk::before { content: '🔥'; }
+
 .cart-button {
     background: none;
     border: none;

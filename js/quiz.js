@@ -171,6 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
             result = resultData.ecoRisk;
         }
 
+        localStorage.setItem('ecoType', result.className);
+
         document.getElementById('quiz-container').classList.add('hidden');
         resultsContainer.classList.remove('hidden');
         resultsContainer.classList.add(result.className);
