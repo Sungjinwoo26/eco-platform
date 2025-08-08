@@ -16,7 +16,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 1;
 }
 
 spline-viewer {
@@ -29,6 +29,8 @@ spline-viewer {
     padding: 2rem 3rem;
     border-radius: 15px;
     backdrop-filter: blur(5px);
+    position: relative;
+    z-index: 2;
 }
 
 .hero-content h1 {
@@ -54,10 +56,11 @@ spline-viewer {
 #map-container {
     position: relative;
     margin-top: 2rem;
+    height: 70vh; /* Ensure container has height */
 }
 
 #map {
-    height: 65vh;
+    height: 100%; /* Make map fill the container */
     width: 100%;
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -68,9 +71,19 @@ spline-viewer {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.9);
     padding: 1rem 2rem;
     border-radius: 5px;
     font-weight: 600;
-    z-index: 500; /* Below map controls but above map tiles */
+    z-index: 800; /* Ensure it's above the map tiles */
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+    #city-search {
+        width: 200px;
+    }
 }
