@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco Marketplace - EcoTrack</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/marketplace.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">🌍 EcoTrack</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="ranking.html">Rankings</a></li>
+            <li><a href="education.html">Learn</a></li>
+            <li><a href="marketplace.html" class="active">Marketplace</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <h1>Eco-Friendly Marketplace</h1>
+        <p>Sustainable products to help you protect your health and the planet. All prices are in INR (₹).</p>
+        <div id="product-grid" class="product-grid">
+            </div>
+    </main>
+
+    <script src="js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const productGrid = document.getElementById('product-grid');
+
+            marketplaceData.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                // Using Intl.NumberFormat for proper currency formatting
+                const formattedPrice = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product.price);
+
+                productCard.innerHTML = `
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <p class="product-type">${product.type}</p>
+                        <div class="product-footer">
+                            <span class="product-price">${formattedPrice}</span>
+                            <button class="btn">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                productGrid.appendChild(productCard);
+            });
+        });
+    </script>
+</body>
+</html>

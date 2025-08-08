@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTrack - Real-Time Environment Monitoring</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">🌍 EcoTrack</a>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="ranking.html">Rankings</a></li>
+            <li><a href="education.html">Learn</a></li>
+            <li><a href="marketplace.html">Marketplace</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero-section">
+        <div class="spline-background">
+            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.42/build/spline-viewer.js"></script>
+            <spline-viewer url="https://prod.spline.design/Gs6mE02t5V82S3wp/scene.splinecode"></spline-viewer>
+        </div>
+        <div class="hero-content">
+            <h1>Monitor Our Planet in Real-Time</h1>
+            <p>Search for a city to get live air quality and environmental data.</p>
+            <div class="search-container">
+                <input type="text" id="city-search" placeholder="Enter city name...">
+                <button class="btn">Search</button>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h2>World Air Quality Map (Live AQI)</h2>
+        <p>This map shows real-time PM2.5 concentrations from across the globe. Click on a circle for details.</p>
+        <div id="map-container">
+            <div id="map"></div>
+            <div id="loader" class="loader">Loading Map Data...</div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="js/homepage.js"></script>
+</body>
+</html>
