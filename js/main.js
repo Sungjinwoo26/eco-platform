@@ -4,13 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchBtn = document.getElementById('searchBtn');
 
     // --- Configuration ---
-    // Using the 'demo' token for the WAQI API. For production, get a free key from https://aqicn.org/data-platform/token/
     const WAQI_TOKEN = "c3a5fb06cf8a7723dc386ef31a857c35c8de2f8e"; 
     const WAQI_MAP_URL = `https://api.waqi.info/map/bounds/?latlng={lat1},{lng1},{lat2},{lng2}&token=${WAQI_TOKEN}`;
     const WAQI_SEARCH_URL = `https://api.waqi.info/search/?keyword={keyword}&token=${WAQI_TOKEN}`;
 
     // --- Map Initialization ---
-    const map = L.map('map').setView([20, 0], 2); // Centered globally
+    const map = L.map('map').setView([20, 0], 2);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -22,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Core Functions ---
     const getAqiColor = (aqi) => {
-        if (aqi <= 50) return { color: '#28a745', status: 'Good' }; // Green
-        if (aqi <= 100) return { color: '#ffc107', status: 'Moderate' }; // Yellow
-        if (aqi <= 150) return { color: '#fd7e14', status: 'Unhealthy for Sensitive' }; // Orange
-        if (aqi <= 200) return { color: '#dc3545', status: 'Unhealthy' }; // Red
-        if (aqi <= 300) return { color: '#6f42c1', status: 'Very Unhealthy' }; // Purple
-        return { color: '#781c45', status: 'Hazardous' }; // Maroon
+        if (aqi <= 50) return { color: '#28a745', status: 'Good' };
+        if (aqi <= 100) return { color: '#ffc107', status: 'Moderate' };
+        if (aqi <= 150) return { color: '#fd7e14', status: 'Unhealthy for Sensitive' };
+        if (aqi <= 200) return { color: '#dc3545', status: 'Unhealthy' };
+        if (aqi <= 300) return { color: '#6f42c1', status: 'Very Unhealthy' };
+        return { color: '#781c45', status: 'Hazardous' };
     };
 
     const fetchMapData = () => {
@@ -39,22 +38,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         fetch(url)
             .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok. The API might be down or your token is invalid.');
-                }
+                if (!response.ok) throw new Error('Network response was not ok.');
                 return response.json();
             })
             .then(data => {
                 if (data.status === "ok") {
                     updateMapMarkers(data.data);
                 } else {
-                    console.error('API Error:', data.message || 'Unknown error');
+                    console.error('API Error:', data.data);
                     alert(`API Error: ${data.data}`);
                 }
             })
             .catch(error => {
                 console.error('Fetch Error:', error);
-                alert('Could not fetch map data. Please check your connection or try again later.');
+                alert('Could not fetch map data. Please check connection or API token.');
             })
             .finally(() => {
                  loader.style.display = 'none';
@@ -67,33 +64,27 @@ document.addEventListener('DOMContentLoaded', () => {
             const aqi = parseInt(station.aqi, 10);
             if (!isNaN(aqi) && station.lat && station.lon) {
                 const { color, status } = getAqiColor(aqi);
-
                 const circleMarker = L.circleMarker([station.lat, station.lon], {
-                    radius: 6,
+                    radius: 8,
                     fillColor: color,
                     color: '#fff',
-                    weight: 1,
+                    weight: 1.5,
                     opacity: 1,
                     fillOpacity: 0.8
-                });
-                
-                // --- Popup Content ---
-                let popupContent = `
+                }).bindPopup(`
                     <div class="popup-content">
                         <h4>${station.station.name}</h4>
                         <p class="aqi-value" style="background-color: ${color};">AQI: ${aqi} (${status})</p>
                         <p class="timestamp">Last updated: ${new Date(station.station.time).toLocaleString()}</p>
                     </div>
-                `;
-
-                circleMarker.bindPopup(popupContent);
+                `);
                 stationsLayer.addLayer(circleMarker);
             }
         });
     };
     
     const searchForCity = () => {
-        const city = citySearchInput.value;
+        const city = citySearchInput.value.trim();
         if (!city) {
             alert('Please enter a city name.');
             return;
@@ -107,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.status === 'ok' && data.data.length > 0) {
                     const firstResult = data.data[0];
-                    if (firstResult.station.geo) {
+                    if (firstResult.station && firstResult.station.geo) {
                          map.setView(firstResult.station.geo, 11);
                     } else {
                         alert('Location data not found for this city.');
@@ -124,7 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
                  loader.style.display = 'none';
             });
     };
-
 
     // --- Event Listeners ---
     map.on('moveend', fetchMapData);

@@ -1,37 +1,43 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Dummy product data
+    // Dummy product data with unique IDs
     const products = [
         {
+            id: 'prod-001',
             name: 'HEPA Air Purifier',
             price: 8999,
             image: 'https://images.unsplash.com/photo-1623122175342-6a75a7c21b22?w=500&auto=format&fit=crop',
             description: 'Removes 99.97% of airborne particles. Ideal for bedrooms and offices.'
         },
         {
+            id: 'prod-002',
             name: 'Insulated Steel Water Bottle',
             price: 1299,
             image: 'https://images.unsplash.com/photo-1602143407151-24741630d173?w=500&auto=format&fit=crop',
             description: 'Keep drinks cold for 24 hours or hot for 12. BPA-free.'
         },
         {
+            id: 'prod-003',
             name: 'Air Purifying Spider Plant',
             price: 499,
             image: 'https://images.unsplash.com/photo-1619069452588-6638f37b1206?w=500&auto=format&fit=crop',
             description: 'Easy to care for and excellent at removing toxins from the air.'
         },
         {
+            id: 'prod-004',
             name: 'Portable Solar Charger',
             price: 2499,
             image: 'https://images.unsplash.com/photo-1593592415514-a51b36585542?w=500&auto=format&fit=crop',
             description: 'Charge your devices on the go with the power of the sun.'
         },
         {
+            id: 'prod-005',
             name: 'Bamboo Toothbrush (Pack of 4)',
             price: 299,
             image: 'https://images.unsplash.com/photo-1627620259924-118d3b4822ed?w=500&auto=format&fit=crop',
             description: 'A sustainable alternative to plastic toothbrushes. 100% biodegradable.'
         },
         {
+            id: 'prod-006',
             name: 'Kitchen Compost Bin',
             price: 1999,
             image: 'https://images.unsplash.com/photo-1598179971029-7d84813f6323?w=500&auto=format&fit=crop',
@@ -41,23 +47,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const productGrid = document.getElementById('product-grid');
 
-    const createProductCard = (product) => {
-        return `
-            <div class="product-card">
-                <img src="${product.image}" alt="${product.name}" class="product-image">
-                <div class="product-info">
-                    <h3 class="product-name">${product.name}</h3>
-                    <p class="product-description">${product.description}</p>
-                    <div class="product-footer">
-                        <span class="product-price">₹${product.price.toLocaleString('en-IN')}</span>
-                        <button class="add-to-cart-btn">Add to Cart</button>
-                    </div>
+    const createProductCard = (product, index) => {
+        // The card is created as a DOM element to attach event listeners directly
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.style.animationDelay = `${index * 100}ms`; // Staggered animation
+        
+        card.innerHTML = `
+            <img src="${product.image}" alt="${product.name}" class="product-image">
+            <div class="product-info">
+                <h3 class="product-name">${product.name}</h3>
+                <p class="product-description">${product.description}</p>
+                <div class="product-footer">
+                    <span class="product-price">₹${product.price.toLocaleString('en-IN')}</span>
+                    <button class="add-to-cart-btn" data-product-id="${product.id}">Add to Cart</button>
                 </div>
             </div>
         `;
+        return card;
     };
 
-    products.forEach(product => {
-        productGrid.innerHTML += createProductCard(product);
-    });
+    // Populate grid and add event listeners
+    if (productGrid) {
+        products.forEach((product, index) => {
+            const card = createProductCard(product, index);
+            productGrid.appendChild(card);
+        });
+
+        // Event delegation for "Add to Cart" buttons
+        productGrid.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart-btn')) {
+                const productId = e.target.dataset.productId;
+                const product = products.find(p => p.id === productId);
+                if(product) {
+                    window.Cart.add(product); // Use the global Cart object
+                    e.target.textContent = 'Added!';
+                    setTimeout(() => {
+                        e.target.textContent = 'Add to Cart';
+                    }, 1000);
+                }
+            }
+        });
+    }
 });

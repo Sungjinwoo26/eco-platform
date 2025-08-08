@@ -16,18 +16,39 @@
     <nav>
         <a href="index.html" class="logo">EcoTrack 🌍</a>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
+            <li class="active"><a href="index.html">Home</a></li>
             <li><a href="ranking.html">Rankings</a></li>
             <li><a href="education.html">Learn</a></li>
             <li><a href="marketplace.html">Marketplace</a></li>
         </ul>
-        <button class="hamburger" id="hamburger-button">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-        </button>
+        <div class="header-actions">
+            <div class="cart-container">
+                <button id="cart-button" class="cart-button">🛒</button>
+                <span id="cart-count">0</span>
+            </div>
+            <button class="hamburger" id="hamburger-button">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
     </nav>
 </header>
+    
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <p>Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cart-total">₹0</span></h3>
+                <button id="buy-now-btn" class="buy-now-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
+
 
     <main>
         <section class="hero-section">
@@ -49,7 +70,28 @@
             <h2>Global Environmental Data Map</h2>
             <div id="loader" class="loader">Loading Map Data...</div>
             <div id="map"></div>
+            <div class="map-legend anim-fade-in">
+                <h3>AQI Legend</h3>
+                <div class="legend-item"><span class="legend-color" style="background-color: #28a745;"></span> 0-50: Good</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #ffc107;"></span> 51-100: Moderate</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #fd7e14;"></span> 101-150: Unhealthy (Sensitive)</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #dc3545;"></span> 151-200: Unhealthy</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #6f42c1;"></span> 201-300: Very Unhealthy</div>
+                <div class="legend-item"><span class="legend-color" style="background-color: #781c45;"></span> 301+: Hazardous</div>
+            </div>
         </section>
+
+        <section class="mission-section anim-fade-in">
+            <div class="mission-content">
+                <h2>Our Mission: A Greener Tomorrow</h2>
+                <p>At EcoTrack, we believe that awareness is the first step toward meaningful change. Our platform provides transparent, real-time data to empower individuals, communities, and policymakers. By understanding the state of our environment, we can make informed decisions to protect our planet for future generations. We are committed to not just monitoring, but also educating and providing resources to foster a global community dedicated to sustainability.</p>
+                <p>From offering eco-friendly products in our marketplace to providing educational guides and highlighting global pollution rankings, every aspect of EcoTrack is designed to support one goal: creating a healthier, more sustainable world. Join us in this journey to track, learn, and act.</p>
+            </div>
+             <div class="mission-image">
+                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500&auto=format&fit=crop" alt="Lush green valley">
+            </div>
+        </section>
+
     </main>
 
     <footer>
@@ -60,10 +102,8 @@
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <script src="js/main.js"></script>
-    
     <script src="js/nav.js"></script>
+    <script src="js/cart.js"></script>
 
-</body>
-</html>
 </body>
 </html>

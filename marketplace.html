@@ -11,21 +11,41 @@
 <body>
 
     <header>
-    <nav>
-        <a href="index.html" class="logo">EcoTrack 🌍</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="ranking.html">Rankings</a></li>
-            <li><a href="education.html">Learn</a></li>
-            <li><a href="marketplace.html">Marketplace</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger-button">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-        </button>
-    </nav>
-</header>
+        <nav>
+            <a href="index.html" class="logo">EcoTrack 🌍</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ranking.html">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li class="active"><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="cart-container">
+                    <button id="cart-button" class="cart-button">🛒</button>
+                    <span id="cart-count">0</span>
+                </div>
+                <button class="hamburger" id="hamburger-button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <p>Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cart-total">₹0</span></h3>
+                <button id="buy-now-btn" class="buy-now-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
 
     <main class="marketplace-main">
         <h1>Eco-Friendly Marketplace</h1>
@@ -36,15 +56,19 @@
         
         <section class="free-initiatives">
             <h2>🌱 Free Initiatives & Resources</h2>
-            <div class="initiative-card">
+            <div class="initiative-card anim-fade-in">
                 <h3>Free Tree Plantation Drive</h3>
                 <p>Join us in our mission to reforest our communities. Sign up and we'll dedicate a sapling in your name, for free!</p>
-                <button>Register Now</button>
+                <a href="https://forms.gle/XsZjPyhuYV9tgKW49" target="_blank" rel="noopener noreferrer">
+                    <button>Register Now</button>
+                </a>
             </div>
-             <div class="initiative-card">
+             <div class="initiative-card anim-fade-in">
                 <h3>Download Our Awareness Booklet</h3>
                 <p>Get a free digital copy of our "Guide to a Greener Future" filled with tips, facts, and actionable advice.</p>
-                <button>Download PDF</button>
+                <a href="assets/Our Green Future A Step-by-Step Guide.pdf" download="Our-Green-Future-Guide.pdf">
+                    <button>Download PDF</button>
+                </a>
             </div>
         </section>
     </main>
@@ -54,6 +78,7 @@
     </footer>
     
     <script src="js/marketplace.js"></script>
-     <script src="js/nav.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 </html>

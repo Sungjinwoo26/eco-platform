@@ -11,21 +11,41 @@
 <body>
 
     <header>
-    <nav>
-        <a href="index.html" class="logo">EcoTrack 🌍</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="ranking.html">Rankings</a></li>
-            <li><a href="education.html">Learn</a></li>
-            <li><a href="marketplace.html">Marketplace</a></li>
-        </ul>
-        <button class="hamburger" id="hamburger-button">
-            <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-            </span>
-        </button>
-    </nav>
-</header>
+        <nav>
+            <a href="index.html" class="logo">EcoTrack 🌍</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li class="active"><a href="ranking.html">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="cart-container">
+                    <button id="cart-button" class="cart-button">🛒</button>
+                    <span id="cart-count">0</span>
+                </div>
+                <button class="hamburger" id="hamburger-button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </nav>
+    </header>
+    
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items">
+                <p>Your cart is empty.</p>
+            </div>
+            <div class="cart-footer">
+                <h3>Total: <span id="cart-total">₹0</span></h3>
+                <button id="buy-now-btn" class="buy-now-btn">Buy Now</button>
+            </div>
+        </div>
+    </div>
 
     <main class="ranking-main">
         <h1>Global City Environmental Rankings</h1>
@@ -48,6 +68,7 @@
         <p>&copy; 2025 EcoTrack. All Rights Reserved.</p>
     </footer>
      <script src="js/nav.js"></script>
-    <script src="js/ranking.js"></script>
+     <script src="js/ranking.js"></script>
+     <script src="js/cart.js"></script>
 </body>
 </html>

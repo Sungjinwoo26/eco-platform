@@ -39,11 +39,19 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
 }
 
+/* Staggered animation delay */
+.article-card:nth-child(2) { animation-delay: 0.1s; }
+.article-card:nth-child(3) { animation-delay: 0.2s; }
+
+
 .article-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
 }
 
 .article-card img {
@@ -70,6 +78,7 @@
     background-color: var(--secondary-color);
     font-weight: 600;
     color: var(--primary-color);
+    transition: background-color 0.3s, color 0.3s;
 }
 .read-more:hover {
     background-color: var(--accent-color);
@@ -87,6 +96,18 @@
     box-shadow: var(--shadow);
     border-radius: 10px;
     overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Staggered animation delay */
+.video-card:nth-child(2) { animation-delay: 0.1s; }
+
+
+.video-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
 }
 
 .video-card iframe {
@@ -120,4 +141,15 @@
     font-size: 1.1rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
+}
+
+/* NEW STYLE for links in the action list */
+.action-steps a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.action-steps a:hover {
+    color: var(--accent-color);
 }
