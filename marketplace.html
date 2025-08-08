@@ -6,59 +6,49 @@
     <title>Eco Marketplace - EcoTrack</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/marketplace.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-    <a href="index.html" class="logo">🌍 EcoTrack</a>
-    
-    <div class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-    
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ranking.html">Rankings</a></li>
-        <li><a href="education.html">Learn</a></li>
-        <li><a href="marketplace.html" class="active">Marketplace</a></li>
-    </ul>
-</nav>
 
-    <main class="container">
+    <header>
+        <nav>
+            <a href="index.html" class="logo">EcoTrack 🌍</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ranking.html">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li><a href="marketplace.html" class="active">Marketplace</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="marketplace-main">
         <h1>Eco-Friendly Marketplace</h1>
-        <p>Sustainable products to help you protect your health and the planet. All prices are in INR (₹).</p>
-        <div id="product-grid" class="product-grid">
+        <p>Shop for products that are good for you and the planet.</p>
+
+        <div class="product-grid" id="product-grid">
             </div>
+        
+        <section class="free-initiatives">
+            <h2>🌱 Free Initiatives & Resources</h2>
+            <div class="initiative-card">
+                <h3>Free Tree Plantation Drive</h3>
+                <p>Join us in our mission to reforest our communities. Sign up and we'll dedicate a sapling in your name, for free!</p>
+                <button>Register Now</button>
+            </div>
+             <div class="initiative-card">
+                <h3>Download Our Awareness Booklet</h3>
+                <p>Get a free digital copy of our "Guide to a Greener Future" filled with tips, facts, and actionable advice.</p>
+                <button>Download PDF</button>
+            </div>
+        </section>
     </main>
 
-    <script src="js/data.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const productGrid = document.getElementById('product-grid');
+    <footer>
+        <p>&copy; 2025 EcoTrack. All Rights Reserved.</p>
+    </footer>
+    
+    <script src="js/marketplace.js"></script>
 
-            marketplaceData.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.className = 'product-card';
-                // Using Intl.NumberFormat for proper currency formatting
-                const formattedPrice = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(product.price);
-
-                productCard.innerHTML = `
-                    <div class="product-image">
-                        <img src="${product.image}" alt="${product.name}">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">${product.name}</h3>
-                        <p class="product-type">${product.type}</p>
-                        <div class="product-footer">
-                            <span class="product-price">${formattedPrice}</span>
-                            <button class="btn">Add to Cart</button>
-                        </div>
-                    </div>
-                `;
-                productGrid.appendChild(productCard);
-            });
-        });
-    </script>
 </body>
 </html>

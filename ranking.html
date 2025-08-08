@@ -6,67 +6,43 @@
     <title>City Rankings - EcoTrack</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/ranking.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-    <a href="index.html" class="logo">🌍 EcoTrack</a>
-    
-    <div class="hamburger-menu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-    </div>
-    
-    <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="ranking.html" class="active">Rankings</a></li>
-        <li><a href="education.html">Learn</a></li>
-        <li><a href="marketplace.html">Marketplace</a></li>
-    </ul>
-</nav>
 
-    <main class="container">
-        <h1>Global Environment Rankings</h1>
-        <p>Based on Air Quality Index (AQI) and sustainability efforts.</p>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">EcoTrack 🌍</a>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ranking.html" class="active">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <section class="ranking-section">
-            <h2>🏆 Top 5 Best Cities</h2>
-            <div id="best-cities-container" class="ranking-grid">
+    <main class="ranking-main">
+        <h1>Global City Environmental Rankings</h1>
+        <p>Based on Air Quality Index (AQI) and overall pollution levels.</p>
+
+        <section class="ranking-container">
+            <h2>🏆 Top 10 Best Cities (Cleanest Air)</h2>
+            <div class="cards-grid" id="best-cities-grid">
                 </div>
         </section>
 
-        <section class="ranking-section">
-            <h2>⚠️ Top 5 Worst Cities</h2>
-            <div id="worst-cities-container" class="ranking-grid">
-                </div>
+        <section class="ranking-container">
+            <h2>⚠️ Top 10 Worst Cities (Most Polluted Air)</h2>
+            <div class="cards-grid" id="worst-cities-grid">
+                 </div>
         </section>
     </main>
 
-    <script src="js/data.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const bestContainer = document.getElementById('best-cities-container');
-            const worstContainer = document.getElementById('worst-cities-container');
+    <footer>
+        <p>&copy; 2025 EcoTrack. All Rights Reserved.</p>
+    </footer>
 
-            function createCard(cityData, type) {
-                const card = document.createElement('div');
-                card.className = `ranking-card ${type}`;
-                card.innerHTML = `
-                    <h3>${cityData.city}, ${cityData.country}</h3>
-                    <div class="aqi-value">AQI: <span>${cityData.aqi}</span></div>
-                    <p>${cityData.fact}</p>
-                `;
-                return card;
-            }
-
-            rankingData.best.forEach(city => {
-                bestContainer.appendChild(createCard(city, 'best'));
-            });
-
-            rankingData.worst.forEach(city => {
-                worstContainer.appendChild(createCard(city, 'worst'));
-            });
-        });
-    </script>
+    <script src="js/ranking.js"></script>
 </body>
 </html>

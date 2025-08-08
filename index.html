@@ -3,50 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoTrack - Real-Time Environment Monitoring</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+    <title>EcoTrack - Real-Time Environmental Monitoring</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <nav class="navbar">
-        <a href="index.html" class="logo">🌍 EcoTrack</a>
-        <div class="hamburger-menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-        </div>
-        <ul class="nav-links">
-            <li><a href="index.html" class="active">Home</a></li>
-            <li><a href="ranking.html">Rankings</a></li>
-            <li><a href="education.html">Learn</a></li>
-            <li><a href="marketplace.html">Marketplace</a></li>
-        </ul>
-    </nav>
 
-    <header class="hero-section">
-        <div class="spline-background">
-            <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.42/build/spline-viewer.js"></script>
-            <spline-viewer url="https://prod.spline.design/Gs6mE02t5V82S3wp/scene.splinecode"></spline-viewer>
-        </div>
-        <div class="hero-content">
-            <h1>Monitor Our Planet in Real-Time</h1>
-            <p>Search for a city to get live air quality and environmental data.</p>
-        </div>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">
+                EcoTrack 🌍
+            </a>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="ranking.html">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+        </nav>
     </header>
-    
-    <main class="container">
-        <h2>World Air Quality Map (Live AQI)</h2>
-        <p>This map shows real-time PM2.5 concentrations from across the globe.</p>
-        <div id="map-container">
-            <div id="map"></div>
+
+    <main>
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Monitor Our Planet's Health, In Real-Time</h1>
+                <p>Enter a city to check its Air Quality Index (AQI)</p>
+                <div class="search-container">
+                    <input type="text" id="citySearch" placeholder="E.g., Mumbai, New York, Tokyo...">
+                    <button id="searchBtn">Search</button>
+                </div>
+            </div>
+            <div class="spline-container">
+                 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.42/build/spline-viewer.js"></script>
+                <spline-viewer loading-anim-type="spinner" url="https://prod.spline.design/Gs6mE02t5V82S3wp/scene.splinecode"></spline-viewer>
+            </div>
+        </section>
+
+        <section class="map-section">
+            <h2>Global Environmental Data Map</h2>
             <div id="loader" class="loader">Loading Map Data...</div>
-        </div>
+            <div id="map"></div>
+        </section>
     </main>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
-    <script src="js/homepage.js"></script>
-    <script src="js/main.js"></script> 
+    <footer>
+        <p>&copy; 2025 EcoTrack. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

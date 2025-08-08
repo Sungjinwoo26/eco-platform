@@ -1,47 +1,108 @@
-.ranking-section {
+.ranking-main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    text-align: center;
+}
+
+.ranking-main h1 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.ranking-main p {
+    color: #666;
+    margin-bottom: 3rem;
+    font-size: 1.1rem;
+}
+
+.ranking-container h2 {
+    text-align: left;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.ranking-container h2.best { color: var(--accent-color); }
+.ranking-container h2.worst { color: #dc3545; }
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
     margin-bottom: 3rem;
 }
 
-.ranking-section h2 {
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 0.5rem;
-    display: inline-block;
-    margin-bottom: 1.5rem;
-}
-
-.ranking-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.ranking-card {
-    background: var(--light-color);
-    border-left: 5px solid;
+.rank-card {
+    background-color: var(--bg-light);
+    border-radius: 10px;
     padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: var(--shadow);
+    border-left: 5px solid;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.ranking-card:hover {
+.rank-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
 }
 
-.ranking-card.best { border-color: var(--success-color); }
-.ranking-card.worst { border-color: var(--danger-color); }
-
-.ranking-card h3 {
-    margin-top: 0;
-    color: var(--dark-color);
+.rank-number {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #888;
 }
 
-.ranking-card .aqi-value {
+.city-info {
+    text-align: left;
+    flex-grow: 1;
+    margin-left: 1.5rem;
+}
+
+.city-info h3 {
+    margin: 0 0 0.25rem 0;
     font-size: 1.2rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
 }
 
-.ranking-card.best .aqi-value span { color: var(--success-color); }
-.ranking-card.worst .aqi-value span { color: var(--danger-color); }
+.city-info p {
+    margin: 0;
+    color: #777;
+    font-size: 0.9rem;
+}
+
+.aqi-info {
+    text-align: center;
+}
+
+.aqi-info .aqi-label {
+    font-size: 0.8rem;
+    color: #555;
+    display: block;
+}
+
+.aqi-info .aqi-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+/* Color coding for cards */
+.rank-card.good { border-left-color: #28a745; }
+.rank-card.good .aqi-value { color: #28a745; }
+
+.rank-card.moderate { border-left-color: #ffc107; }
+.rank-card.moderate .aqi-value { color: #ffc107; }
+
+.rank-card.unhealthy-sensitive { border-left-color: #fd7e14; }
+.rank-card.unhealthy-sensitive .aqi-value { color: #fd7e14; }
+
+.rank-card.unhealthy { border-left-color: #dc3545; }
+.rank-card.unhealthy .aqi-value { color: #dc3545; }
+
+.rank-card.very-unhealthy { border-left-color: #6f42c1; }
+.rank-card.very-unhealthy .aqi-value { color: #6f42c1; }
+
+.rank-card.hazardous { border-left-color: #781c45; }
+.rank-card.hazardous .aqi-value { color: #781c45; }
