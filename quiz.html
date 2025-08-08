@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Type Quiz - EcoTrack</title>
+    <link rel="icon" type="image/png" href="assets/images/favcon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quiz.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a href="index.html" class="logo">EcoTrack 🌍</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="ranking.html">Rankings</a></li>
+                <li><a href="education.html">Learn</a></li>
+                <li class="active"><a href="quiz.html">Find Your Eco-Type</a></li>
+                <li><a href="marketplace.html">Marketplace</a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="cart-container">
+                    <button id="cart-button" class="cart-button">🛒</button>
+                    <span id="cart-count">0</span>
+                </div>
+                <button class="hamburger" id="hamburger-button">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="quiz-main">
+        <div id="quiz-container">
+            <div id="quiz-header">
+                <h1 id="quiz-title">🌱 Your Eco-Type Quiz</h1>
+                <div id="progress-bar-container">
+                    <div id="progress-bar"></div>
+                </div>
+            </div>
+            <div id="question-area">
+                </div>
+            <div id="start-screen">
+                <h2>Discover Your Environmental Impact</h2>
+                <p>Answer 7 quick questions to find out your Eco-Type and get personalized tips!</p>
+                <button id="start-quiz-btn">Start Quiz</button>
+            </div>
+        </div>
+
+        <div id="results-container" class="hidden">
+            </div>
+
+        <section id="mission-section-quiz" class="mission-section hidden anim-fade-in">
+             <div class="mission-content">
+                <h2>Our Mission: A Greener Tomorrow</h2>
+                <p>At EcoTrack, we believe that awareness is the first step toward meaningful change. Our platform provides transparent, real-time data to empower individuals, communities, and policymakers. By understanding the state of our environment, we can make informed decisions to protect our planet for future generations. We are committed to not just monitoring, but also educating and providing resources to foster a global community dedicated to sustainability.</p>
+                <p>From offering eco-friendly products in our marketplace to providing educational guides and highlighting global pollution rankings, every aspect of EcoTrack is designed to support one goal: creating a healthier, more sustainable world. Join us in this journey to track, learn, and act.</p>
+            </div>
+             <div class="mission-image">
+                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=500&auto=format&fit=crop" alt="Lush green valley">
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 EcoTrack. All Rights Reserved.</p>
+    </footer>
+
+    <script src="js/quiz.js"></script>
+    <script src="js/nav.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
