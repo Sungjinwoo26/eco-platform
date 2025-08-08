@@ -9,7 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const WAQI_SEARCH_URL = `https://api.waqi.info/search/?keyword={keyword}&token=${WAQI_TOKEN}`;
 
     // --- Map Initialization ---
-    const map = L.map('map').setView([20, 0], 2);
+    // UPDATED: Set the default view to Mumbai's coordinates with a closer zoom level.
+    const map = L.map('map').setView([19.0760, 72.8777], 11); 
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
