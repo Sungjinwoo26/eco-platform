@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. DEFINE ALL CONSTANTS AND VARIABLES ---
 
-    // API Configuration
+    // API Configuration - REVERTED to client-side key for now
     const WAQI_TOKEN = "c3a5fb06cf8a7723dc386ef31a857c35c8de2f8e"; 
     const WAQI_MAP_URL = `https://api.waqi.info/map/bounds/?latlng={lat1},{lng1},{lat2},{lng2}&token=${WAQI_TOKEN}`;
     const WAQI_SEARCH_URL = `https://api.waqi.info/search/?keyword={keyword}&token=${WAQI_TOKEN}`;
@@ -91,8 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 2. INITIALIZE THE MAP ---
- 
-const map = L.map('map').setView([28.6139, 77.2090], 11);
+    const map = L.map('map', { zoomAnimation: false }).setView([28.6139, 77.2090], 11);
     let stationsLayer = L.layerGroup().addTo(map);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
@@ -102,7 +101,7 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
     }).addTo(map);
 
 
-    // --- 3. DEFINE ALL FUNCTIONS (Map Logic) ---
+    // --- 3. DEFINE ALL FUNCTIONS ---
     const getAqiColor = (aqi) => {
         if (aqi <= 50) return { color: '#28a745', status: 'Good' };
         if (aqi <= 100) return { color: '#ffc107', status: 'Moderate' };
@@ -116,42 +115,66 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
         const bounds = map.getBounds();
         const latlng = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
         const url = WAQI_MAP_URL.replace('{lat1},{lng1},{lat2},{lng2}', latlng);
+        
         loader.style.display = 'block';
+
         fetch(url)
-            .then(response => { if (!response.ok) throw new Error('Network response was not ok.'); return response.json(); })
-            .then(data => { if (data.status === "ok") { updateMapMarkers(data.data); } else { console.error('API Error:', data.data); alert(`API Error: ${data.data}`); } })
-            .catch(error => { console.error('Fetch Error:', error); alert('Could not fetch map data. Please check connection or API token.'); })
-            .finally(() => { loader.style.display = 'none'; });
+            .then(response => { 
+                if (!response.ok) {
+                    throw new Error('Network response was not ok.');
+                }
+                return response.json(); 
+            })
+            .then(data => {
+                if (data.status === "ok") {
+                    const newStationsLayer = L.layerGroup();
+
+                    data.data.forEach(station => {
+                        const aqi = parseInt(station.aqi, 10);
+                        if (!isNaN(aqi) && station.lat && station.lon) {
+                            const { color, status } = getAqiColor(aqi);
+                            const popupContent = `
+                                <div class="popup-content">
+                                    <h4>${station.station.name}</h4>
+                                    <p class="aqi-value" style="background-color: ${color};">
+                                        AQI: ${aqi} (${status})
+                                    </p>
+                                    <p class="timestamp">
+                                        Last updated: ${new Date(station.station.time).toLocaleString()}
+                                    </p>
+                                    <div class="popup-actions">
+                                        <a href="education.html" class="popup-btn">Learn</a>
+                                        <a href="marketplace.html" class="popup-btn shop">Shop Solutions</a>
+                                    </div>
+                                </div>
+                            `;
+                            const circleMarker = L.circleMarker([station.lat, station.lon], { radius: 8, fillColor: color, color: '#fff', weight: 1.5, opacity: 1, fillOpacity: 0.8 })
+                                .bindPopup(popupContent, { autoPan: false });
+                            
+                            newStationsLayer.addLayer(circleMarker);
+                        }
+                    });
+
+                    if (map.hasLayer(stationsLayer)) {
+                        map.removeLayer(stationsLayer);
+                    }
+
+                    newStationsLayer.addTo(map);
+                    stationsLayer = newStationsLayer;
+
+                } else {
+                    console.error('API Error:', data.data);
+                }
+            })
+            .catch(error => { 
+                console.error('Fetch Error:', error); 
+                alert('Could not fetch map data. Please check connection or API token.'); 
+            })
+            .finally(() => { 
+                loader.style.display = 'none'; 
+            });
     };
 
-    const updateMapMarkers = (stations) => {
-        stationsLayer.clearLayers();
-        stations.forEach(station => {
-            const aqi = parseInt(station.aqi, 10);
-            if (!isNaN(aqi) && station.lat && station.lon) {
-                const { color, status } = getAqiColor(aqi);
-                const popupContent = `
-                    <div class="popup-content">
-                        <h4>${station.station.name}</h4>
-                        <p class="aqi-value" style="background-color: ${color};">
-                            AQI: ${aqi} (${status})
-                        </p>
-                        <p class="timestamp">
-                            Last updated: ${new Date(station.station.time).toLocaleString()}
-                        </p>
-                        <div class="popup-actions">
-                            <a href="education.html" class="popup-btn">Learn</a>
-                            <a href="marketplace.html" class="popup-btn shop">Shop Solutions</a>
-                        </div>
-                    </div>
-                `;
-                const circleMarker = L.circleMarker([station.lat, station.lon], { radius: 8, fillColor: color, color: '#fff', weight: 1.5, opacity: 1, fillOpacity: 0.8 })
-                .bindPopup(popupContent);
-                stationsLayer.addLayer(circleMarker);
-            }
-        });
-    };
-    
     const searchForCity = () => {
         const city = citySearchInput.value.trim();
         if (!city) { alert('Please enter a city name.'); return; }
@@ -165,9 +188,14 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
     };
 
     // --- 4. ATTACH ALL EVENT LISTENERS ---
+    let moveEndTimeout;
+    map.on('moveend', () => {
+        clearTimeout(moveEndTimeout);
+        moveEndTimeout = setTimeout(() => {
+            fetchMapData();
+        }, 250);
+    });
 
-    // Map Listeners
-    map.on('moveend', fetchMapData);
     searchBtn.addEventListener('click', searchForCity);
     citySearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchForCity(); });
 
@@ -177,12 +205,10 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
     launchSimBtn.addEventListener('click', toggleSimulator);
     closeSimBtn.addEventListener('click', toggleSimulator);
     
-    // Update slider value displays
     treeSlider.addEventListener('input', () => { treeSliderValue.textContent = `${parseInt(treeSlider.value).toLocaleString()} trees`; });
     plasticSlider.addEventListener('input', () => { plasticSliderValue.textContent = `${plasticSlider.value}%`; });
     solarSlider.addEventListener('input', () => { solarSliderValue.textContent = `${solarSlider.value}%`; });
 
-    // Update simulator text when city changes
     citySelect.addEventListener('change', (e) => {
         const selectedCityKey = e.target.value;
         const selectedCity = cityData[selectedCityKey];
@@ -193,12 +219,9 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
     });
 
     applyChangesBtn.addEventListener('click', () => {
-        // Get current values from sliders
         const treesPlanted = parseInt(treeSlider.value);
         const plasticReductionPercent = parseInt(plasticSlider.value);
         const solarAdoptionPercent = parseInt(solarSlider.value);
-
-        // Get the data for the currently selected city
         const selectedCityKey = citySelect.value;
         const currentCityData = cityData[selectedCityKey];
 
@@ -207,18 +230,15 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
             return;
         }
 
-        // --- The Model (Now Dynamic) ---
         const CO2_ABSORPTION_PER_TREE_KG_YEAR = 21;
         const CO2_PER_TON_PLASTIC_TONS = 2.5;
         
-        // --- The Calculations (Using data from the selected city) ---
         const co2FromTrees = (treesPlanted * CO2_ABSORPTION_PER_TREE_KG_YEAR) / 1000;
         const co2FromPlastic = (currentCityData.annualPlasticTons * (plasticReductionPercent / 100)) * CO2_PER_TON_PLASTIC_TONS;
         const co2FromSolar = (currentCityData.households * (solarAdoptionPercent / 100) * currentCityData.avgKwhPerHouseholdYear * currentCityData.co2KgPerKwhGrid) / 1000;
         
         const totalCo2Reduced = co2FromTrees + co2FromPlastic + co2FromSolar;
 
-        // --- The Output ---
         simulationResults.innerHTML = `
             <ul>
                 <li>🌳 Trees: <strong>-${co2FromTrees.toFixed(2)}</strong> tonnes CO₂/year</li>
@@ -228,7 +248,6 @@ const map = L.map('map').setView([28.6139, 77.2090], 11);
             </ul>
         `;
     });
-
 
     // --- 5. INITIALIZE THE PAGE ---
     fetchMapData();
