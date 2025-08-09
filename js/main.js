@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. DEFINE ALL CONSTANTS AND VARIABLES ---
 
-    // API Configuration - REVERTED to client-side key for now
+    // API Configuration
     const WAQI_TOKEN = "c3a5fb06cf8a7723dc386ef31a857c35c8de2f8e"; 
     const WAQI_MAP_URL = `https://api.waqi.info/map/bounds/?latlng={lat1},{lng1},{lat2},{lng2}&token=${WAQI_TOKEN}`;
     const WAQI_SEARCH_URL = `https://api.waqi.info/search/?keyword={keyword}&token=${WAQI_TOKEN}`;
@@ -31,64 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // City Data Library for Simulator
     const cityData = {
-        mumbai: {
-            name: 'Mumbai',
-            annualPlasticTons: 438000,
-            households: 4500000,
-            avgKwhPerHouseholdYear: 3500,
-            co2KgPerKwhGrid: 0.75 // India's grid average
-        },
-        delhi: {
-            name: 'Delhi',
-            annualPlasticTons: 250000,
-            households: 4200000,
-            avgKwhPerHouseholdYear: 4000,
-            co2KgPerKwhGrid: 0.75
-        },
-        pune: {
-            name: 'Pune',
-            annualPlasticTons: 150000,
-            households: 1500000,
-            avgKwhPerHouseholdYear: 3200,
-            co2KgPerKwhGrid: 0.75
-        },
-        hyderabad: {
-            name: 'Hyderabad',
-            annualPlasticTons: 180000,
-            households: 2000000,
-            avgKwhPerHouseholdYear: 3800,
-            co2KgPerKwhGrid: 0.75
-        },
-        bengaluru: {
-            name: 'Bengaluru',
-            annualPlasticTons: 200000,
-            households: 2500000,
-            avgKwhPerHouseholdYear: 4100,
-            co2KgPerKwhGrid: 0.75
-        },
-        london: {
-            name: 'London',
-            annualPlasticTons: 1100000,
-            households: 3600000,
-            avgKwhPerHouseholdYear: 3300,
-            co2KgPerKwhGrid: 0.23 // UK's grid average
-        },
-        newYork: {
-            name: 'New York',
-            annualPlasticTons: 1700000,
-            households: 3100000,
-            avgKwhPerHouseholdYear: 6500,
-            co2KgPerKwhGrid: 0.29 // US grid average
-        },
-        tokyo: {
-            name: 'Tokyo',
-            annualPlasticTons: 780000,
-            households: 7200000,
-            avgKwhPerHouseholdYear: 4500,
-            co2KgPerKwhGrid: 0.45 // Japan's grid average
-        }
+        mumbai: { name: 'Mumbai', annualPlasticTons: 438000, households: 4500000, avgKwhPerHouseholdYear: 3500, co2KgPerKwhGrid: 0.75 },
+        delhi: { name: 'Delhi', annualPlasticTons: 250000, households: 4200000, avgKwhPerHouseholdYear: 4000, co2KgPerKwhGrid: 0.75 },
+        pune: { name: 'Pune', annualPlasticTons: 150000, households: 1500000, avgKwhPerHouseholdYear: 3200, co2KgPerKwhGrid: 0.75 },
+        hyderabad: { name: 'Hyderabad', annualPlasticTons: 180000, households: 2000000, avgKwhPerHouseholdYear: 3800, co2KgPerKwhGrid: 0.75 },
+        bengaluru: { name: 'Bengaluru', annualPlasticTons: 200000, households: 2500000, avgKwhPerHouseholdYear: 4100, co2KgPerKwhGrid: 0.75 },
+        london: { name: 'London', annualPlasticTons: 1100000, households: 3600000, avgKwhPerHouseholdYear: 3300, co2KgPerKwhGrid: 0.23 },
+        newYork: { name: 'New York', annualPlasticTons: 1700000, households: 3100000, avgKwhPerHouseholdYear: 6500, co2KgPerKwhGrid: 0.29 },
+        tokyo: { name: 'Tokyo', annualPlasticTons: 780000, households: 7200000, avgKwhPerHouseholdYear: 4500, co2KgPerKwhGrid: 0.45 },
+        kolkata: { name: 'Kolkata', annualPlasticTons: 280000, households: 2200000, avgKwhPerHouseholdYear: 3400, co2KgPerKwhGrid: 0.75 },
+        ghaziabad: { name: 'Ghaziabad', annualPlasticTons: 200000, households: 500000, avgKwhPerHouseholdYear: 3800, co2KgPerKwhGrid: 0.75 },
+        lahore: { name: 'Lahore', annualPlasticTons: 300000, households: 1800000, avgKwhPerHouseholdYear: 3900, co2KgPerKwhGrid: 0.55 },
+        dhaka: { name: 'Dhaka', annualPlasticTons: 400000, households: 3500000, avgKwhPerHouseholdYear: 3200, co2KgPerKwhGrid: 0.48 },
+        baghdad: { name: 'Baghdad', annualPlasticTons: 220000, households: 1500000, avgKwhPerHouseholdYear: 4100, co2KgPerKwhGrid: 0.60 },
+        kathmandu: { name: 'Kathmandu', annualPlasticTons: 120000, households: 400000, avgKwhPerHouseholdYear: 3100, co2KgPerKwhGrid: 0.52 },
+        bishkek: { name: 'Bishkek', annualPlasticTons: 80000, households: 300000, avgKwhPerHouseholdYear: 3500, co2KgPerKwhGrid: 0.70 },
+        hotan: { name: 'Hotan', annualPlasticTons: 100000, households: 200000, avgKwhPerHouseholdYear: 4200, co2KgPerKwhGrid: 0.65 },
+        ndjamena: { name: 'N\'Djamena', annualPlasticTons: 50000, households: 200000, avgKwhPerHouseholdYear: 2800, co2KgPerKwhGrid: 0.50 }
     };
-
 
     // --- 2. INITIALIZE THE MAP ---
     const map = L.map('map', { zoomAnimation: false }).setView([28.6139, 77.2090], 11);
@@ -99,7 +59,6 @@ document.addEventListener('DOMContentLoaded', () => {
         subdomains: 'abcd',
         maxZoom: 19
     }).addTo(map);
-
 
     // --- 3. DEFINE ALL FUNCTIONS ---
     const getAqiColor = (aqi) => {
@@ -115,70 +74,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const bounds = map.getBounds();
         const latlng = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
         const url = WAQI_MAP_URL.replace('{lat1},{lng1},{lat2},{lng2}', latlng);
-        
         loader.style.display = 'block';
-
         fetch(url)
-            .then(response => { 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok.');
-                }
-                return response.json(); 
-            })
+            .then(response => { if (!response.ok) throw new Error('Network response was not ok.'); return response.json(); })
             .then(data => {
                 if (data.status === "ok") {
                     const newStationsLayer = L.layerGroup();
-
                     data.data.forEach(station => {
                         const aqi = parseInt(station.aqi, 10);
                         if (!isNaN(aqi) && station.lat && station.lon) {
                             const { color, status } = getAqiColor(aqi);
-                            const popupContent = `
-                                <div class="popup-content">
-                                    <h4>${station.station.name}</h4>
-                                    <p class="aqi-value" style="background-color: ${color};">
-                                        AQI: ${aqi} (${status})
-                                    </p>
-                                    <p class="timestamp">
-                                        Last updated: ${new Date(station.station.time).toLocaleString()}
-                                    </p>
-                                    <div class="popup-actions">
-                                        <a href="education.html" class="popup-btn">Learn</a>
-                                        <a href="marketplace.html" class="popup-btn shop">Shop Solutions</a>
-                                    </div>
-                                </div>
-                            `;
-                            const circleMarker = L.circleMarker([station.lat, station.lon], { radius: 8, fillColor: color, color: '#fff', weight: 1.5, opacity: 1, fillOpacity: 0.8 })
-                                .bindPopup(popupContent, { autoPan: false });
-                            
+                            const popupContent = `<div class="popup-content"><h4>${station.station.name}</h4><p class="aqi-value" style="background-color: ${color};">AQI: ${aqi} (${status})</p><p class="timestamp">Last updated: ${new Date(station.station.time).toLocaleString()}</p><div class="popup-actions"><a href="education.html" class="popup-btn">Learn</a><a href="marketplace.html" class="popup-btn shop">Shop Solutions</a></div></div>`;
+                            const circleMarker = L.circleMarker([station.lat, station.lon], { radius: 8, fillColor: color, color: '#fff', weight: 1.5, opacity: 1, fillOpacity: 0.8 }).bindPopup(popupContent, { autoPan: false });
                             newStationsLayer.addLayer(circleMarker);
                         }
                     });
-
                     if (map.hasLayer(stationsLayer)) {
                         map.removeLayer(stationsLayer);
                     }
-
                     newStationsLayer.addTo(map);
                     stationsLayer = newStationsLayer;
-
                 } else {
                     console.error('API Error:', data.data);
                 }
             })
-            .catch(error => { 
-                console.error('Fetch Error:', error); 
-                alert('Could not fetch map data. Please check connection or API token.'); 
-            })
-            .finally(() => { 
-                loader.style.display = 'none'; 
-            });
+            .catch(error => { console.error('Fetch Error:', error); alert('Could not fetch map data. Please check connection or API token.'); })
+            .finally(() => { loader.style.display = 'none'; });
     };
 
-    const searchForCity = () => {
-        const city = citySearchInput.value.trim();
-        if (!city) { alert('Please enter a city name.'); return; }
-        const url = WAQI_SEARCH_URL.replace('{keyword}', encodeURIComponent(city));
+    const searchForCity = (city) => {
+        const keyword = city || citySearchInput.value.trim();
+        if (!keyword) { alert('Please enter a city name.'); return; }
+        const url = WAQI_SEARCH_URL.replace('{keyword}', encodeURIComponent(keyword));
         loader.style.display = 'block';
         fetch(url)
             .then(response => response.json())
@@ -187,7 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .finally(() => { loader.style.display = 'none'; });
     };
 
-    // --- 4. ATTACH ALL EVENT LISTENERS ---
+    const toggleSimulator = () => simulatorPanel.classList.toggle('is-open');
+
+    // --- 4. ATTACH ALL EVENT LISTENERS & INITIALIZE PAGE ---
+    
+    // Map Listeners
     let moveEndTimeout;
     map.on('moveend', () => {
         clearTimeout(moveEndTimeout);
@@ -196,12 +127,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 250);
     });
 
-    searchBtn.addEventListener('click', searchForCity);
+    searchBtn.addEventListener('click', () => searchForCity());
     citySearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchForCity(); });
 
-    // --- Simulator Logic ---
-    const toggleSimulator = () => simulatorPanel.classList.toggle('is-open');
-
+    // Simulator Listeners
     launchSimBtn.addEventListener('click', toggleSimulator);
     closeSimBtn.addEventListener('click', toggleSimulator);
     
@@ -224,32 +153,41 @@ document.addEventListener('DOMContentLoaded', () => {
         const solarAdoptionPercent = parseInt(solarSlider.value);
         const selectedCityKey = citySelect.value;
         const currentCityData = cityData[selectedCityKey];
-
         if (!currentCityData) {
             alert('Please select a valid city.');
             return;
         }
-
         const CO2_ABSORPTION_PER_TREE_KG_YEAR = 21;
         const CO2_PER_TON_PLASTIC_TONS = 2.5;
-        
         const co2FromTrees = (treesPlanted * CO2_ABSORPTION_PER_TREE_KG_YEAR) / 1000;
         const co2FromPlastic = (currentCityData.annualPlasticTons * (plasticReductionPercent / 100)) * CO2_PER_TON_PLASTIC_TONS;
         const co2FromSolar = (currentCityData.households * (solarAdoptionPercent / 100) * currentCityData.avgKwhPerHouseholdYear * currentCityData.co2KgPerKwhGrid) / 1000;
-        
         const totalCo2Reduced = co2FromTrees + co2FromPlastic + co2FromSolar;
-
-        simulationResults.innerHTML = `
-            <ul>
-                <li>🌳 Trees: <strong>-${co2FromTrees.toFixed(2)}</strong> tonnes CO₂/year</li>
-                <li>♻️ Plastic: <strong>-${co2FromPlastic.toFixed(2)}</strong> tonnes CO₂/year</li>
-                <li>☀️ Solar: <strong>-${co2FromSolar.toFixed(2)}</strong> tonnes CO₂/year</li>
-                <li class="total-impact">Combined: <strong>-${totalCo2Reduced.toFixed(2)}</strong> tonnes CO₂/year</li>
-            </ul>
-        `;
+        simulationResults.innerHTML = `<ul><li>🌳 Trees: <strong>-${co2FromTrees.toFixed(2)}</strong> tonnes CO₂/year</li><li>♻️ Plastic: <strong>-${co2FromPlastic.toFixed(2)}</strong> tonnes CO₂/year</li><li>☀️ Solar: <strong>-${co2FromSolar.toFixed(2)}</strong> tonnes CO₂/year</li><li class="total-impact">Combined: <strong>-${totalCo2Reduced.toFixed(2)}</strong> tonnes CO₂/year</li></ul>`;
     });
 
     // --- 5. INITIALIZE THE PAGE ---
-    fetchMapData();
+    function handlePageLoadActions() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const cityToSearch = urlParams.get('city');
+        const cityToSimulate = urlParams.get('simulate');
 
+        if (cityToSimulate && cityData[cityToSimulate]) {
+            // If there's a city to simulate, handle that first
+            searchForCity(cityData[cityToSimulate].name); // Pan map to the city
+            citySelect.value = cityToSimulate; // Set the dropdown
+            simCityName.textContent = cityData[cityToSimulate].name; // Update text
+            if (!simulatorPanel.classList.contains('is-open')) {
+                toggleSimulator(); // Open the simulator
+            }
+        } else if (cityToSearch) {
+            // Otherwise, if there's just a city to search, do that
+            searchForCity(cityToSearch);
+        } else {
+            // Default behavior if no parameters
+            fetchMapData();
+        }
+    }
+
+    handlePageLoadActions();
 });
