@@ -785,3 +785,35 @@ spline-viewer {
         border-radius: 10px 0 0 10px;
     }
 }
+
+
+/* Add these new styles for simulator sharing */
+.share-scenario {
+    margin-top: 1rem;
+    display: flex;
+    gap: 10px;
+}
+
+#share-scenario-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#share-scenario-btn:hover {
+    background-color: var(--accent-color);
+}
+
+#share-link-input {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+    background-color: #f0f0f0;
+}
