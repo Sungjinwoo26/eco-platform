@@ -141,13 +141,13 @@ nav .logo {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2;
-    /* CHANGE THIS LINE */
-    background-image: url('../assets/images/mainback.jpg');
+    z-index: -2; /* Ensure it is behind the hero content */
+    background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b');
     background-size: cover;
     background-position: center center;
     animation: kenburns 30s ease-out infinite alternate;
 }
+
 
 /*
 
