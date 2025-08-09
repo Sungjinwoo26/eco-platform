@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const plasticSliderValue = document.getElementById('plastic-slider-value');
     const solarSlider = document.getElementById('solar-slider');
     const solarSliderValue = document.getElementById('solar-slider-value');
-    // New share elements
     const shareScenarioBtn = document.getElementById('share-scenario-btn');
     const shareLinkInput = document.getElementById('share-link-input');
 
@@ -73,7 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
                         const aqi = parseInt(station.aqi, 10);
                         if (!isNaN(aqi) && station.lat && station.lon) {
                             const { color, status } = getAqiColor(aqi);
-                            const popupContent = `<div class="popup-content"><h4>${station.station.name}</h4><p class="aqi-value" style="background-color: ${color};">AQI: ${aqi} (${status})</p><p class="timestamp">Last updated: ${new Date(station.station.time).toLocaleString()}</p><div class="popup-actions"><a href="education.html" class="popup-btn">Learn</a><a href="marketplace.html" class="popup-btn shop">Shop Solutions</a></div></div>`;
+                            const popupContent = `
+                                <div class="popup-content">
+                                    <h4>${station.station.name}</h4>
+                                    <p class="aqi-value" style="background-color: ${color};">AQI: ${aqi} (${status})</p>
+                                    <p class="timestamp">Last updated: ${new Date(station.station.time).toLocaleString()}</p>
+                                    <div class="popup-actions">
+                                        <a href="education.html" class="popup-btn">Learn More</a>
+                                        <a href="marketplace.html" class="popup-btn shop">Shop Solutions</a>
+                                    </div>
+                                </div>`;
                             const circleMarker = L.circleMarker([station.lat, station.lon], { radius: 8, fillColor: color, color: '#fff', weight: 1.5, opacity: 1, fillOpacity: 0.8 }).bindPopup(popupContent, { autoPan: false });
                             newStationsLayer.addLayer(circleMarker);
                         }
@@ -154,7 +162,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     applyChangesBtn.addEventListener('click', runSimulation);
 
-    // --- NEW: Share Scenario Logic ---
     shareScenarioBtn.addEventListener('click', () => {
         const baseUrl = window.location.origin + window.location.pathname;
         const params = new URLSearchParams({
@@ -165,9 +172,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         const shareUrl = `${baseUrl}?${params.toString()}`;
         shareLinkInput.value = shareUrl;
-        shareLinkInput.select(); // Highlight the text for easy copying
+        shareLinkInput.select();
         
-        // Optional: copy to clipboard
         try {
             document.execCommand('copy');
             shareScenarioBtn.textContent = 'Copied!';
@@ -178,13 +184,12 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error('Failed to copy link: ', err);
         }
     });
-    // --- End of New Logic ---
 
     // --- 5. INITIALIZE THE PAGE ---
     function handlePageLoadActions() {
         const urlParams = new URLSearchParams(window.location.search);
         const cityToSearch = urlParams.get('city');
-        const cityToSimulate = urlParams.get('simulate');
+        const cityToSimulate = url_params.get('simulate');
         const treesVal = urlParams.get('trees');
         const plasticVal = urlParams.get('plastic');
         const solarVal = urlParams.get('solar');
@@ -194,7 +199,6 @@ document.addEventListener('DOMContentLoaded', () => {
             citySelect.value = cityToSimulate;
             simCityName.textContent = cityData[cityToSimulate].name;
             
-            // If slider values are in the URL, set them
             if (treesVal) {
                 treeSlider.value = treesVal;
                 treeSliderValue.textContent = `${parseInt(treesVal).toLocaleString()} trees`;
@@ -208,7 +212,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 solarSliderValue.textContent = `${solarVal}%`;
             }
 
-            // Run simulation with the loaded values
             runSimulation();
 
             if (!simulatorPanel.classList.contains('is-open')) {

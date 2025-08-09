@@ -817,3 +817,34 @@ spline-viewer {
     font-size: 0.8rem;
     background-color: #f0f0f0;
 }
+
+
+/* --- NEW STYLES FOR POPUP ACTIONS --- */
+.popup-actions {
+    display: flex;
+    gap: 10px; /* Increased space between buttons */
+    margin-top: 12px;
+}
+
+.popup-btn {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    color: #FFFFFF; /* Changed to pure white for better visibility */
+    background-color: #3B82F6; /* A modern, friendly blue for both buttons */
+    border-radius: 5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border: none; /* Make it look more like a button */
+    cursor: pointer;
+}
+
+.popup-btn:hover {
+    background-color: #2563EB; /* A slightly darker blue for hover */
+    color: white;
+    transform: scale(1.05); /* Add a subtle hover effect */
+}
+
+/* Removed the .shop specific styles to make buttons identical */
+
