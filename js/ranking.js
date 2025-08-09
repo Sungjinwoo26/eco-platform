@@ -1,33 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Static data for demo purposes
-    const bestCities = [
-        { name: 'Zurich', country: 'Switzerland', aqi: 12, key: 'zurich' },
-        { name: 'Reykjavik', country: 'Iceland', aqi: 14, key: 'reykjavik' },
-        { name: 'Wellington', country: 'New Zealand', aqi: 15, key: 'wellington' },
-        { name: 'Helsinki', country: 'Finland', aqi: 18, key: 'helsinki' },
-        { name: 'Canberra', country: 'Australia', aqi: 20, key: 'canberra' },
-        { name: 'Ottawa', country: 'Canada', aqi: 22, key: 'ottawa' },
-        { name: 'Stockholm', country: 'Sweden', aqi: 24, key: 'stockholm' },
-        { name: 'Honolulu', country: 'USA', aqi: 25, key: 'honolulu' },
-        { name: 'Oslo', country: 'Norway', aqi: 26, key: 'oslo' },
-        { name: 'Tallinn', country: 'Estonia', aqi: 28, key: 'tallinn' },
-    ];
-
-    const worstCities = [
-        { name: 'Ghaziabad', country: 'India', aqi: 288, key: 'ghaziabad' },
-        { name: 'Hotan', country: 'China', aqi: 265, key: 'hotan' },
-        { name: 'Lahore', country: 'Pakistan', aqi: 251, key: 'lahore' },
-        { name: 'Delhi', country: 'India', aqi: 232, key: 'delhi' },
-        { name: 'Baghdad', country: 'Iraq', aqi: 210, key: 'baghdad' },
-        { name: 'Dhaka', country: 'Bangladesh', aqi: 198, key: 'dhaka' },
-        { name: 'Bishkek', country: 'Kyrgyzstan', aqi: 185, key: 'bishkek' },
-        { name: 'N\'Djamena', country: 'Chad', aqi: 182, key: 'ndjamena' },
-        { name: 'Kolkata', country: 'India', aqi: 177, key: 'kolkata' },
-        { name: 'Kathmandu', country: 'Nepal', aqi: 175, key: 'kathmandu' },
-    ];
-
     const bestCitiesGrid = document.getElementById('best-cities-grid');
     const worstCitiesGrid = document.getElementById('worst-cities-grid');
+    const loader = document.getElementById('ranking-loader');
 
     const getAqiColorClass = (aqi) => {
         if (aqi <= 50) return 'good';
@@ -40,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const createCard = (city, rank, isWorst) => {
         const colorClass = getAqiColorClass(city.aqi);
-        // MODIFIED: Added #map to the URL to enable auto-scrolling
         const mapLink = `index.html?city=${encodeURIComponent(city.name)}#map`;
 
         const mainContentHTML = `
@@ -62,8 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <a href="index.html?simulate=${city.key || encodeURIComponent(city.name)}" class="simulate-btn">Simulate Impact</a>
             </div>
         ` : '';
-
-        // For all cards, the main content area is now a link to the map
+        
         const cardLinkWrapper = `
             <a href="${mapLink}" class="city-info-link">
                 ${mainContentHTML}
@@ -78,11 +50,45 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
     };
 
-    bestCities.sort((a, b) => a.aqi - b.aqi).forEach((city, index) => {
-        bestCitiesGrid.innerHTML += createCard(city, index + 1, false);
-    });
+    async function loadRankings() {
+        loader.style.display = 'block'; // Show loader
 
-    worstCities.sort((a, b) => b.aqi - a.aqi).forEach((city, index) => {
-        worstCitiesGrid.innerHTML += createCard(city, index + 1, true);
-    });
+        try {
+            const response = await fetch('data/city_aqi_data.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok.');
+            }
+            const allCities = await response.json();
+
+            // Sort all cities by AQI, from best to worst
+            allCities.sort((a, b) => a.aqi - b.aqi);
+
+            // Get the top 10 best cities
+            const bestCities = allCities.slice(0, 10);
+
+            // Get the top 10 worst cities
+            const worstCities = allCities.slice(-10).reverse();
+
+            // Clear existing content
+            bestCitiesGrid.innerHTML = '';
+            worstCitiesGrid.innerHTML = '';
+
+            // Populate the grids
+            bestCities.forEach((city, index) => {
+                bestCitiesGrid.innerHTML += createCard(city, index + 1, false);
+            });
+
+            worstCities.forEach((city, index) => {
+                worstCitiesGrid.innerHTML += createCard(city, index + 1, true);
+            });
+
+        } catch (error) {
+            console.error('Failed to load city rankings:', error);
+            bestCitiesGrid.innerHTML = '<p>Could not load city rankings. Please try again later.</p>';
+        } finally {
+            loader.style.display = 'none'; // Hide loader
+        }
+    }
+
+    loadRankings();
 });
