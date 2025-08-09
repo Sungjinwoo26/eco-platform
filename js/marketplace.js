@@ -45,15 +45,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     ];
 
+    // --- NEW: Recommendation Logic ---
+    const recommendations = {
+        'eco-hero': { productId: 'prod-001', text: 'Recommended for 🌿 Eco Heroes' },
+        'eco-aware': { productId: 'prod-004', text: 'Recommended for 🌱 Eco Aware' },
+        'eco-learner': { productId: 'prod-006', text: 'Recommended for 🍂 Eco Learners' },
+        'eco-risk': { productId: 'prod-002', text: 'Recommended for your Eco-Type' }
+    };
+
+    const userEcoType = localStorage.getItem('ecoType');
+    const recommendation = recommendations[userEcoType];
+    // --------------------------------
+
     const productGrid = document.getElementById('product-grid');
 
     const createProductCard = (product, index) => {
-        // The card is created as a DOM element to attach event listeners directly
         const card = document.createElement('div');
         card.className = 'product-card';
-        card.style.animationDelay = `${index * 100}ms`; // Staggered animation
+        card.style.animationDelay = `${index * 100}ms`;
         
+        // --- NEW: Check if this product should have a recommendation badge ---
+        let recommendationHTML = '';
+        if (recommendation && recommendation.productId === product.id) {
+            recommendationHTML = `<div class="recommendation-badge">${recommendation.text}</div>`;
+        }
+        // -------------------------------------------------------------------
+
         card.innerHTML = `
+            ${recommendationHTML}
             <img src="${product.image}" alt="${product.name}" class="product-image">
             <div class="product-info">
                 <h3 class="product-name">${product.name}</h3>
