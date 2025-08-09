@@ -91,7 +91,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- 2. INITIALIZE THE MAP ---
-    const map = L.map('map').setView([19.0760, 72.8777], 11); 
+ 
+const map = L.map('map').setView([28.6139, 77.2090], 11);
     let stationsLayer = L.layerGroup().addTo(map);
 
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
