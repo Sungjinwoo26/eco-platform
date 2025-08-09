@@ -704,6 +704,29 @@ spline-viewer {
     }
 }
 
+/* ADD these styles near the .simulator-header rule */
+.simulator-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.simulator-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: var(--primary-color);
+}
+.sim-city-selector label {
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+.sim-city-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+}
+
 @media (min-width: 769px) {
     /* Simulator Right Panel for Desktop */
     #simulator-panel {

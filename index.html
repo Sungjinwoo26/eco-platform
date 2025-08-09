@@ -24,7 +24,7 @@
             <li><a href="marketplace.html">Marketplace</a></li>
         </ul>
         <div class="header-actions">
-             <a href="quiz.html" id="eco-badge" class="eco-badge" title="Your Eco-Type"></a>
+            <a href="quiz.html" id="eco-badge" class="eco-badge" title="Your Eco Badge"></a>
             <div class="cart-container">
                 <button id="cart-button" class="cart-button">🛒</button>
                 <span id="cart-count">0</span>
@@ -91,9 +91,24 @@
         <button id="simulator-toggle-btn" class="simulator-toggle-btn">&times;</button>
         <div class="simulator-header">
             <h2>What If Simulator 🌱</h2>
+            <div class="sim-city-selector">
+                <label for="city-select">Select City:</label>
+                <select name="city-select" id="city-select">
+                    <option value="mumbai">Mumbai</option>
+                    <option value="delhi">Delhi</option>
+                    <option value="pune">Pune</option>
+                    <option value="hyderabad">Hyderabad</option>
+                    <option value="bengaluru">Bengaluru</option>
+                    <option value="london">London</option>
+                    <option value="newYork">New York</option>
+                    <option value="tokyo">Tokyo</option>
+                </select>
+            </div>
         </div>
         <div class="simulator-content">
-            <p>Simulate environmental actions in Mumbai to see their potential impact.</p>
+            <p>Simulate environmental actions in 
+                <strong id="sim-city-name">Mumbai</strong> to see their potential impact.
+            </p>
             
             <div class="sim-control">
                 <label for="tree-slider">🌳 Plant Trees</label>
