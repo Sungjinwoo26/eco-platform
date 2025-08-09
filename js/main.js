@@ -2,11 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. DEFINE ALL CONSTANTS AND VARIABLES ---
 
-    // API Configuration
-    const WAQI_TOKEN = "c3a5fb06cf8a7723dc386ef31a857c35c8de2f8e"; 
-    const WAQI_MAP_URL = `https://api.waqi.info/map/bounds/?latlng={lat1},{lng1},{lat2},{lng2}&token=${WAQI_TOKEN}`;
-    const WAQI_SEARCH_URL = `https://api.waqi.info/search/?keyword={keyword}&token=${WAQI_TOKEN}`;
-
     // DOM Element References
     const loader = document.getElementById('loader');
     const citySearchInput = document.getElementById('citySearch');
@@ -72,11 +67,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchMapData = () => {
         const bounds = map.getBounds();
-        const latlng = `${bounds.getSouth()},${bounds.getWest()},${bounds.getNorth()},${bounds.getEast()}`;
-        const url = WAQI_MAP_URL.replace('{lat1},{lng1},{lat2},{lng2}', latlng);
+        // MODIFIED: URL points to our new serverless function
+        const url = `/.netlify/functions/getMapData?lat1=${bounds.getSouth()}&lng1=${bounds.getWest()}&lat2=${bounds.getNorth()}&lng2=${bounds.getEast()}`;
+        
         loader.style.display = 'block';
+
         fetch(url)
-            .then(response => { if (!response.ok) throw new Error('Network response was not ok.'); return response.json(); })
+            .then(response => { 
+                if (!response.ok) throw new Error('Network response was not ok.');
+                return response.json(); 
+            })
             .then(data => {
                 if (data.status === "ok") {
                     const newStationsLayer = L.layerGroup();
@@ -98,14 +98,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('API Error:', data.data);
                 }
             })
-            .catch(error => { console.error('Fetch Error:', error); alert('Could not fetch map data. Please check connection or API token.'); })
-            .finally(() => { loader.style.display = 'none'; });
+            .catch(error => { 
+                console.error('Fetch Error:', error); 
+                alert('Could not fetch map data. Please check connection or API token.'); 
+            })
+            .finally(() => { 
+                loader.style.display = 'none'; 
+            });
     };
 
     const searchForCity = (city) => {
         const keyword = city || citySearchInput.value.trim();
         if (!keyword) { alert('Please enter a city name.'); return; }
-        const url = WAQI_SEARCH_URL.replace('{keyword}', encodeURIComponent(keyword));
+        // MODIFIED: URL points to our new serverless function
+        const url = `/.netlify/functions/searchCity?keyword=${encodeURIComponent(keyword)}`;
+        
         loader.style.display = 'block';
         fetch(url)
             .then(response => response.json())
@@ -118,7 +125,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 4. ATTACH ALL EVENT LISTENERS & INITIALIZE PAGE ---
     
-    // Map Listeners
     let moveEndTimeout;
     map.on('moveend', () => {
         clearTimeout(moveEndTimeout);
@@ -130,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     searchBtn.addEventListener('click', () => searchForCity());
     citySearchInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') searchForCity(); });
 
-    // Simulator Listeners
     launchSimBtn.addEventListener('click', toggleSimulator);
     closeSimBtn.addEventListener('click', toggleSimulator);
     
@@ -173,18 +178,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const cityToSimulate = urlParams.get('simulate');
 
         if (cityToSimulate && cityData[cityToSimulate]) {
-            // If there's a city to simulate, handle that first
-            searchForCity(cityData[cityToSimulate].name); // Pan map to the city
-            citySelect.value = cityToSimulate; // Set the dropdown
-            simCityName.textContent = cityData[cityToSimulate].name; // Update text
+            searchForCity(cityData[cityToSimulate].name);
+            citySelect.value = cityToSimulate;
+            simCityName.textContent = cityData[cityToSimulate].name;
             if (!simulatorPanel.classList.contains('is-open')) {
-                toggleSimulator(); // Open the simulator
+                toggleSimulator();
             }
         } else if (cityToSearch) {
-            // Otherwise, if there's just a city to search, do that
             searchForCity(cityToSearch);
         } else {
-            // Default behavior if no parameters
             fetchMapData();
         }
     }
