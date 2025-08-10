@@ -156,76 +156,78 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBar.style.width = `${progressPercent}%`;
     }
 
-       function showResults() {
-        progressBar.style.width = '100%';
+    function showResults() {
+    // Final progress bar update
+    progressBar.style.width = '100%';
 
-        let result;
-        if (totalScore >= 28) {
-            result = resultData.ecoHero;
-            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
-        } else if (totalScore >= 20) {
-            result = resultData.ecoAware;
-        } else if (totalScore >= 12) {
-            result = resultData.ecoLearner;
-        } else {
-            result = resultData.ecoRisk;
-        }
-
-        localStorage.setItem('ecoType', result.className);
-
-        document.getElementById('quiz-container').classList.add('hidden');
-        resultsContainer.classList.remove('hidden');
-        resultsContainer.classList.add(result.className);
-        resultsContainer.innerHTML = `
-            <h2 class="result-title">${result.title}</h2>
-            <p class="result-message">${result.message}</p>
-            <div class="result-tips">
-                <h3>Your Next Steps:</h3>
-                <ul>
-                    ${result.tips.map(tip => `<li>${tip}</li>`).join('')}
-                </ul>
-            </div>
-        `;
-        
-        // --- NEW: Share Button Logic ---
-        const shareContainer = document.getElementById('share-container');
-        const shareBtn = document.getElementById('share-quiz-btn');
-        shareContainer.classList.remove('hidden');
-
-        shareBtn.onclick = () => {
-            const rankText = result.title.split(' - ')[1]; // Extracts "🌿 Eco Hero"
-            const text = `I'm an ${rankText} on EcoTrack! Find out your Eco-Type and see your environmental impact.`;
-            const url = "https://ecotrack25.netlify.app/"; // Your live site URL
-            const hashtags = "EcoTrack,Sustainability,ClimateAction";
-            const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}&hashtags=${encodeURIComponent(hashtags)}`;
-            window.open(twitterUrl, '_blank');
-        };
-        // --- End of New Logic ---
-
-        // Floating Badge Animation Logic (remains the same)
-        const startElement = document.querySelector('.result-title');
-        const endElement = document.getElementById('eco-badge');
-        if (!startElement || !endElement) return;
-        const startRect = startElement.getBoundingClientRect();
-        const endRect = endElement.getBoundingClientRect();
-        const clone = document.createElement('div');
-        clone.className = 'badge-clone ' + result.className;
-        document.body.appendChild(clone);
-        clone.style.left = `${startRect.left + (startRect.width / 2) - 15}px`;
-        clone.style.top = `${startRect.top + (startRect.height / 2) - 15}px`;
-        clone.style.opacity = '0';
-        requestAnimationFrame(() => {
-            clone.style.opacity = '1';
-            clone.style.transform = 'scale(1)';
-            clone.style.left = `${endRect.left}px`;
-            clone.style.top = `${endRect.top}px`;
+    let result;
+    if (totalScore >= 28) {
+        result = resultData.ecoHero;
+        confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 }
         });
-        setTimeout(() => {
-            clone.remove();
-            if(window.updateEcoBadge) {
-                window.updateEcoBadge();
-            }
-        }, 2200);
+    } else if (totalScore >= 20) {
+        result = resultData.ecoAware;
+    } else if (totalScore >= 12) {
+        result = resultData.ecoLearner;
+    } else {
+        result = resultData.ecoRisk;
     }
 
+    localStorage.setItem('ecoType', result.className);
+
+    document.getElementById('quiz-container').classList.add('hidden');
+    resultsContainer.classList.remove('hidden');
+    resultsContainer.classList.add(result.className);
+    resultsContainer.innerHTML = `
+        <h2 class="result-title">${result.title}</h2>
+        <p class="result-message">${result.message}</p>
+        <div class="result-tips">
+            <h3>Your Next Steps:</h3>
+            <ul>
+                ${result.tips.map(tip => `<li>${tip}</li>`).join('')}
+            </ul>
+        </div>
+    `;
+    
+    // --- REVISED Floating Badge Animation Logic ---
+
+    const startElement = document.querySelector('.result-title');
+    const endElement = document.getElementById('eco-badge');
+    
+    if (!startElement || !endElement) return;
+
+    const startRect = startElement.getBoundingClientRect();
+    const endRect = endElement.getBoundingClientRect();
+
+    const clone = document.createElement('div');
+    clone.className = 'badge-clone ' + result.className;
+    document.body.appendChild(clone);
+
+    // Set the starting position of the clone
+    clone.style.left = `${startRect.left + (startRect.width / 2) - 15}px`;
+    clone.style.top = `${startRect.top + (startRect.height / 2) - 15}px`;
+    clone.style.opacity = '0'; // Start invisible
+
+    // Use requestAnimationFrame to ensure the browser has painted the starting state
+    requestAnimationFrame(() => {
+        // Now, apply the styles that will trigger the transition
+        clone.style.opacity = '1';
+        clone.style.transform = 'scale(1)';
+        
+        // Set the final destination coordinates
+        clone.style.left = `${endRect.left}px`;
+        clone.style.top = `${endRect.top}px`;
+    });
+
+    // Clean up after the animation is complete
+    setTimeout(() => {
+        clone.remove();
+        if(window.updateEcoBadge) {
+            window.updateEcoBadge();
+        }
+    }, 400); // This duration must be longer than the CSS transition
+}
 });

@@ -785,6 +785,7 @@ spline-viewer {
         border-radius: 10px 0 0 10px;
     }
 }
+<<<<<<< HEAD
 
 
 /* Add these new styles for simulator sharing */
@@ -848,3 +849,5 @@ spline-viewer {
 
 /* Removed the .shop specific styles to make buttons identical */
 
+=======
+>>>>>>> parent of eecc833 (share button)

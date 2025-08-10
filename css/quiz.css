@@ -144,35 +144,3 @@
         padding: 1.5rem;
     }
 }
-
-
-/* Add these new styles */
-.share-container {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.share-btn {
-    background-color: #1DA1F2;
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: transform 0.2s, background-color 0.2s;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.share-btn:hover {
-    transform: scale(1.05);
-    background-color: #0c85d0;
-}
-
-.share-btn svg {
-    width: 18px;
-    height: 18px;
-}

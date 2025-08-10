@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- 1. DEFINE ALL CONSTANTS AND VARIABLES ---
+
+    // DOM Element References
     const loader = document.getElementById('loader');
     const citySearchInput = document.getElementById('citySearch');
     const searchBtn = document.getElementById('searchBtn');
+    
+    // Simulator DOM Elements
     const simulatorPanel = document.getElementById('simulator-panel');
     const closeSimBtn = document.getElementById('simulator-toggle-btn');
     const launchSimBtn = document.getElementById('mobile-launch-sim-btn');
@@ -11,15 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const simulationResults = document.getElementById('simulation-results');
     const citySelect = document.getElementById('city-select');
     const simCityName = document.getElementById('sim-city-name');
+
+    // Simulator Controls
     const treeSlider = document.getElementById('tree-slider');
     const treeSliderValue = document.getElementById('tree-slider-value');
     const plasticSlider = document.getElementById('plastic-slider');
     const plasticSliderValue = document.getElementById('plastic-slider-value');
     const solarSlider = document.getElementById('solar-slider');
     const solarSliderValue = document.getElementById('solar-slider-value');
+<<<<<<< HEAD
     const shareScenarioBtn = document.getElementById('share-scenario-btn');
     const shareLinkInput = document.getElementById('share-link-input');
+=======
+>>>>>>> parent of eecc833 (share button)
 
+    // City Data Library for Simulator
     const cityData = {
         mumbai: { name: 'Mumbai', annualPlasticTons: 438000, households: 4500000, avgKwhPerHouseholdYear: 3500, co2KgPerKwhGrid: 0.75 },
         delhi: { name: 'Delhi', annualPlasticTons: 250000, households: 4200000, avgKwhPerHouseholdYear: 4000, co2KgPerKwhGrid: 0.75 },
@@ -43,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 2. INITIALIZE THE MAP ---
     const map = L.map('map', { zoomAnimation: false }).setView([28.6139, 77.2090], 11);
     let stationsLayer = L.layerGroup().addTo(map);
+
     L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
         subdomains: 'abcd',
@@ -61,10 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchMapData = () => {
         const bounds = map.getBounds();
+        // MODIFIED: URL points to our new serverless function
         const url = `/.netlify/functions/getMapData?lat1=${bounds.getSouth()}&lng1=${bounds.getWest()}&lat2=${bounds.getNorth()}&lng2=${bounds.getEast()}`;
+        
         loader.style.display = 'block';
+
         fetch(url)
-            .then(response => { if (!response.ok) throw new Error('Network response was not ok.'); return response.json(); })
+            .then(response => { 
+                if (!response.ok) throw new Error('Network response was not ok.');
+                return response.json(); 
+            })
             .then(data => {
                 if (data.status === "ok") {
                     const newStationsLayer = L.layerGroup();
@@ -95,14 +112,21 @@ document.addEventListener('DOMContentLoaded', () => {
                     console.error('API Error:', data.data);
                 }
             })
-            .catch(error => { console.error('Fetch Error:', error); alert('Could not fetch map data. Please check connection or API token.'); })
-            .finally(() => { loader.style.display = 'none'; });
+            .catch(error => { 
+                console.error('Fetch Error:', error); 
+                alert('Could not fetch map data. Please check connection or API token.'); 
+            })
+            .finally(() => { 
+                loader.style.display = 'none'; 
+            });
     };
 
     const searchForCity = (city) => {
         const keyword = city || citySearchInput.value.trim();
         if (!keyword) { alert('Please enter a city name.'); return; }
+        // MODIFIED: URL points to our new serverless function
         const url = `/.netlify/functions/searchCity?keyword=${encodeURIComponent(keyword)}`;
+        
         loader.style.display = 'block';
         fetch(url)
             .then(response => response.json())
@@ -113,26 +137,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const toggleSimulator = () => simulatorPanel.classList.toggle('is-open');
 
-    const runSimulation = () => {
-        const treesPlanted = parseInt(treeSlider.value);
-        const plasticReductionPercent = parseInt(plasticSlider.value);
-        const solarAdoptionPercent = parseInt(solarSlider.value);
-        const selectedCityKey = citySelect.value;
-        const currentCityData = cityData[selectedCityKey];
-        if (!currentCityData) {
-            alert('Please select a valid city.');
-            return;
-        }
-        const CO2_ABSORPTION_PER_TREE_KG_YEAR = 21;
-        const CO2_PER_TON_PLASTIC_TONS = 2.5;
-        const co2FromTrees = (treesPlanted * CO2_ABSORPTION_PER_TREE_KG_YEAR) / 1000;
-        const co2FromPlastic = (currentCityData.annualPlasticTons * (plasticReductionPercent / 100)) * CO2_PER_TON_PLASTIC_TONS;
-        const co2FromSolar = (currentCityData.households * (solarAdoptionPercent / 100) * currentCityData.avgKwhPerHouseholdYear * currentCityData.co2KgPerKwhGrid) / 1000;
-        const totalCo2Reduced = co2FromTrees + co2FromPlastic + co2FromSolar;
-        simulationResults.innerHTML = `<ul><li>🌳 Trees: <strong>-${co2FromTrees.toFixed(2)}</strong> tonnes CO₂/year</li><li>♻️ Plastic: <strong>-${co2FromPlastic.toFixed(2)}</strong> tonnes CO₂/year</li><li>☀️ Solar: <strong>-${co2FromSolar.toFixed(2)}</strong> tonnes CO₂/year</li><li class="total-impact">Combined: <strong>-${totalCo2Reduced.toFixed(2)}</strong> tonnes CO₂/year</li></ul>`;
-    };
-
     // --- 4. ATTACH ALL EVENT LISTENERS & INITIALIZE PAGE ---
+    
     let moveEndTimeout;
     map.on('moveend', () => {
         clearTimeout(moveEndTimeout);
@@ -160,6 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+<<<<<<< HEAD
     applyChangesBtn.addEventListener('click', runSimulation);
 
     shareScenarioBtn.addEventListener('click', () => {
@@ -182,22 +189,45 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 1500);
         } catch (err) {
             console.error('Failed to copy link: ', err);
+=======
+    applyChangesBtn.addEventListener('click', () => {
+        const treesPlanted = parseInt(treeSlider.value);
+        const plasticReductionPercent = parseInt(plasticSlider.value);
+        const solarAdoptionPercent = parseInt(solarSlider.value);
+        const selectedCityKey = citySelect.value;
+        const currentCityData = cityData[selectedCityKey];
+        if (!currentCityData) {
+            alert('Please select a valid city.');
+            return;
+>>>>>>> parent of eecc833 (share button)
         }
+        const CO2_ABSORPTION_PER_TREE_KG_YEAR = 21;
+        const CO2_PER_TON_PLASTIC_TONS = 2.5;
+        const co2FromTrees = (treesPlanted * CO2_ABSORPTION_PER_TREE_KG_YEAR) / 1000;
+        const co2FromPlastic = (currentCityData.annualPlasticTons * (plasticReductionPercent / 100)) * CO2_PER_TON_PLASTIC_TONS;
+        const co2FromSolar = (currentCityData.households * (solarAdoptionPercent / 100) * currentCityData.avgKwhPerHouseholdYear * currentCityData.co2KgPerKwhGrid) / 1000;
+        const totalCo2Reduced = co2FromTrees + co2FromPlastic + co2FromSolar;
+        simulationResults.innerHTML = `<ul><li>🌳 Trees: <strong>-${co2FromTrees.toFixed(2)}</strong> tonnes CO₂/year</li><li>♻️ Plastic: <strong>-${co2FromPlastic.toFixed(2)}</strong> tonnes CO₂/year</li><li>☀️ Solar: <strong>-${co2FromSolar.toFixed(2)}</strong> tonnes CO₂/year</li><li class="total-impact">Combined: <strong>-${totalCo2Reduced.toFixed(2)}</strong> tonnes CO₂/year</li></ul>`;
     });
 
     // --- 5. INITIALIZE THE PAGE ---
     function handlePageLoadActions() {
         const urlParams = new URLSearchParams(window.location.search);
         const cityToSearch = urlParams.get('city');
+<<<<<<< HEAD
         const cityToSimulate = url_params.get('simulate');
         const treesVal = urlParams.get('trees');
         const plasticVal = urlParams.get('plastic');
         const solarVal = urlParams.get('solar');
+=======
+        const cityToSimulate = urlParams.get('simulate');
+>>>>>>> parent of eecc833 (share button)
 
         if (cityToSimulate && cityData[cityToSimulate]) {
             searchForCity(cityData[cityToSimulate].name);
             citySelect.value = cityToSimulate;
             simCityName.textContent = cityData[cityToSimulate].name;
+<<<<<<< HEAD
             
             if (treesVal) {
                 treeSlider.value = treesVal;
@@ -214,6 +244,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
             runSimulation();
 
+=======
+>>>>>>> parent of eecc833 (share button)
             if (!simulatorPanel.classList.contains('is-open')) {
                 toggleSimulator();
             }
