@@ -53,34 +53,35 @@
     </div>
 
     <main>
-        <section class="hero-section">
-            <div class="hero-content">
-                <h1>Monitor Our Planet's Health, In Real-Time</h1>
-                <p>Enter a city to check its Air Quality Index (AQI)</p>
-                <div class="search-container">
-                    <input type="text" id="citySearch" placeholder="E.g., Mumbai, New York, Tokyo...">
-                    <button id="searchBtn">Search</button>
+        <!-- ADDED a wrapper div for clean layout -->
+        <div class="main-content">
+            <section class="hero-section">
+                <div class="hero-content">
+                    <h1>Monitor Our Planet's Health, In Real-Time</h1>
+                    <p>Enter a city to check its Air Quality Index (AQI)</p>
+                    <div class="search-container">
+                        <input type="text" id="citySearch" placeholder="E.g., Mumbai, New York, Tokyo...">
+                        <button id="searchBtn">Search</button>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="hero-background"></div>
-        </section>
+                <div class="hero-background"></div>
+            </section>
 
-        <section class="map-section">
-            <h2>Global Environmental Data Map</h2>
-            <div id="loader" class="loader">Loading Map Data...</div>
-            <div id="map"></div>
-            <div class="map-legend anim-fade-in">
-                <h3>AQI Legend</h3>
-                <div class="legend-item"><span class="legend-color" style="background-color: #28a745;"></span> 0-50: Good</div>
-                <div class="legend-item"><span class="legend-color" style="background-color: #ffc107;"></span> 51-100: Moderate</div>
-                <div class="legend-item"><span class="legend-color" style="background-color: #fd7e14;"></span> 101-150: Unhealthy (Sensitive)</div>
-                <div class="legend-item"><span class="legend-color" style="background-color: #dc3545;"></span> 151-200: Unhealthy</div>
-                <div class="legend-item"><span class="legend-color" style="background-color: #6f42c1;"></span> 201-300: Very Unhealthy</div>
-                <div class="legend-item"><span class="legend-color" style="background-color: #781c45;"></span> 301+: Hazardous</div>
-            </div>
-        </section>
-        
+            <section class="map-section">
+                <h2>Global Environmental Data Map</h2>
+                <div id="loader" class="loader">Loading Map Data...</div>
+                <div id="map"></div>
+                <div class="map-legend anim-fade-in">
+                    <h3>AQI Legend</h3>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #28a745;"></span> 0-50: Good</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #ffc107;"></span> 51-100: Moderate</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #fd7e14;"></span> 101-150: Unhealthy (Sensitive)</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #dc3545;"></span> 151-200: Unhealthy</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #6f42c1;"></span> 201-300: Very Unhealthy</div>
+                    <div class="legend-item"><span class="legend-color" style="background-color: #781c45;"></span> 301+: Hazardous</div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <div id="simulator-panel">
@@ -138,6 +139,10 @@
             <button id="apply-changes-btn">Apply Changes</button>
             <div id="simulation-results">
                 <p>Adjust the sliders to see the projected impact.</p>
+            </div>
+            <div class="share-scenario">
+                <button id="share-scenario-btn">Share Scenario</button>
+                <input type="text" id="share-link-input" readonly placeholder="Click 'Share' to generate a link">
             </div>
         </div>
     </div>

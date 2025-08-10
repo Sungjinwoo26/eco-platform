@@ -41,7 +41,10 @@ a:hover {
 }
 
 main {
-    padding-top: 90px;
+    padding-top: 70px;
+}
+
+.main-content {
     animation: fadeIn 0.6s ease-in-out forwards;
 }
 
@@ -81,7 +84,6 @@ nav .logo {
     color: var(--primary-color);
 }
 
-/* Container for cart + hamburger */
 .header-actions {
     display: flex;
     align-items: center;
@@ -109,11 +111,11 @@ nav .logo {
     border-bottom: 2px solid var(--accent-color);
 }
 
-
 /* --- Homepage: Hero Section --- */
 .hero-section {
     position: relative;
     height: 60vh;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -123,51 +125,24 @@ nav .logo {
     overflow: hidden;
 }
 
-
-/* Add this new keyframe animation */
 @keyframes kenburns {
-    0% {
-        transform: scale(1) translate(0, 0);
-    }
-    100% {
-        transform: scale(1.1) translate(-2%, 2%);
-    }
+    0% { transform: scale(1) translate(0, 0); }
+    100% { transform: scale(1.1) translate(-2%, 2%); }
 }
 
-/* Add this new class for the background */
 .hero-background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -2; /* Ensure it is behind the hero content */
-    background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b');
+    z-index: -2;
+    background-image: url('../assets/images/mainback.jpg');
     background-size: cover;
     background-position: center center;
-    /* animation: kenburns 30s ease-out infinite alternate; */
+    animation: kenburns 30s ease-out infinite alternate;
 }
 
-
-/*
-
-
-
-
-.spline-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-spline-viewer {
-    width: 100%;
-    height: 100%;
-}
-*/
 .hero-content {
     background: rgba(0, 0, 0, 0.5);
     padding: 2rem;
@@ -227,7 +202,6 @@ spline-viewer {
     transform: scale(1.05);
 }
 
-
 /* --- Homepage: Map Section --- */
 .map-section {
     padding: 2rem;
@@ -242,7 +216,7 @@ spline-viewer {
     border-radius: 15px;
     box-shadow: var(--shadow);
     position: relative;
-    background-color: #f0f0f0; /* Placeholder color */
+    background-color: #f0f0f0;
 }
 
 /* --- Map Legend --- */
@@ -277,39 +251,6 @@ spline-viewer {
     border: 1px solid rgba(0,0,0,0.1);
 }
 
-/* --- Homepage: Mission Section --- */
-.mission-section {
-    display: flex;
-    max-width: 1200px;
-    margin: 4rem auto;
-    padding: 2rem;
-    gap: 2rem;
-    align-items: center;
-}
-
-.mission-content {
-    flex: 1;
-}
-
-.mission-content h2 {
-    color: var(--primary-color);
-}
-
-.mission-image {
-    flex: 1;
-    max-width: 500px;
-}
-
-.mission-image img {
-    width: 100%;
-    border-radius: 15px;
-    box-shadow: var(--shadow);
-    transition: transform 0.3s ease;
-}
-.mission-image img:hover {
-    transform: scale(1.03);
-}
-
 /* --- Scroll Animations --- */
 .anim-fade-in {
     opacity: 0;
@@ -321,7 +262,6 @@ spline-viewer {
     opacity: 1;
     transform: translateY(0);
 }
-
 
 /* --- Leaflet Popup Customization --- */
 .popup-content h4 {
@@ -343,18 +283,43 @@ spline-viewer {
     margin: 0;
 }
 
+.popup-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.popup-btn {
+    flex: 1;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 600;
+    color: #FFFFFF;
+    background-color: #3B82F6;
+    border-radius: 5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.popup-btn:hover {
+    background-color: #2563EB;
+    color: white;
+    transform: scale(1.05);
+}
 
 /* --- Loader --- */
 .loader {
     font-size: 1.2rem;
     color: var(--primary-color);
     padding: 2rem;
-    display: none; /* Hidden by default */
+    display: none;
 }
 
 /* --- Hamburger Button --- */
 .hamburger {
-    display: none; /* Hidden on desktop */
+    display: none;
     padding: 10px;
     cursor: pointer;
     background-color: transparent;
@@ -391,35 +356,19 @@ spline-viewer {
     bottom: -10px;
 }
 
-/* Active State */
-.hamburger.is-active .hamburger-inner {
-    transform: rotate(45deg);
-}
-.hamburger.is-active .hamburger-inner::before {
-    top: 0;
-    transform: rotate(90deg);
-}
-.hamburger.is-active .hamburger-inner::after {
-    bottom: 0;
-    transform: rotate(-90deg);
-    opacity: 0;
-}
+.hamburger.is-active .hamburger-inner { transform: rotate(45deg); }
+.hamburger.is-active .hamburger-inner::before { top: 0; transform: rotate(90deg); }
+.hamburger.is-active .hamburger-inner::after { bottom: 0; transform: rotate(-90deg); opacity: 0; }
 
 /* --- Cart Button & Modal --- */
-.cart-container {
-    position: relative;
-}
-
-/* --- NEW: Eco-Type Badge --- */
+.cart-container { position: relative; }
 .eco-badge {
-    display: none; /* Hidden by default */
-    font-size: 1.5rem; /* Same size as cart-button */
+    display: none;
+    font-size: 1.5rem;
     text-decoration: none;
     padding: 0 5px;
     cursor: pointer;
 }
-
-/* Define the emoji content for each type */
 .eco-badge.eco-hero::before { content: '🌿'; }
 .eco-badge.eco-aware::before { content: '🌱'; }
 .eco-badge.eco-learner::before { content: '🍂'; }
@@ -481,9 +430,7 @@ spline-viewer {
     border-bottom: 1px solid var(--border-color);
     padding: 10px 0;
 }
-.cart-item-info {
-    flex-grow: 1;
-}
+.cart-item-info { flex-grow: 1; }
 .cart-item-info h4 { margin: 0; font-size: 1rem; }
 .cart-item-info p { margin: 0; font-size: 0.9rem; color: #666; }
 
@@ -497,10 +444,7 @@ spline-viewer {
     cursor: pointer;
     font-weight: bold;
 }
-.cart-footer {
-    margin-top: 20px;
-    text-align: right;
-}
+.cart-footer { margin-top: 20px; text-align: right; }
 .buy-now-btn {
     background-color: var(--accent-color);
     color: white;
@@ -520,65 +464,6 @@ spline-viewer {
     cursor: not-allowed;
 }
 
-
-/* --- Media Queries --- */
-@media (max-width: 768px) {
-    main {
-        padding-top: 85px;
-    }
-
-    nav {
-        flex-direction: row;
-        height: 70px;
-        padding: 0 1rem;
-    }
-    
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 60%;
-        max-width: 300px;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 2rem;
-        background-color: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        transform: translateX(100%);
-        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        z-index: 1000;
-    }
-    
-    .nav-links.is-active {
-        transform: translateX(0);
-    }
-    
-    .nav-links li a {
-        font-size: 1.2rem;
-    }
-
-    .hamburger {
-        display: block;
-        z-index: 1001;
-    }
-
-    .hero-content h1 { font-size: 2rem; }
-    #map { height: 400px; }
-
-    .mission-section {
-        flex-direction: column;
-        text-align: center;
-    }
-    .cart-modal-content {
-        width: 90%;
-        margin: 30% auto;
-    }
-}
-
-/* ... all existing styles ... */
-
 /* --- "What If" Simulator Panel --- */
 #simulator-panel {
     position: fixed;
@@ -591,18 +476,28 @@ spline-viewer {
     flex-direction: column;
 }
 
-#simulator-panel.is-open {
-    transform: translateX(0);
-}
+#simulator-panel.is-open { transform: translateX(0); }
 
 .simulator-header {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .simulator-header h2 {
     margin: 0;
     font-size: 1.3rem;
     color: var(--primary-color);
+}
+.sim-city-selector label {
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+.sim-city-selector select {
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
 }
 
 .simulator-toggle-btn {
@@ -628,21 +523,14 @@ spline-viewer {
     margin-top: 0;
 }
 
-.sim-control {
-    margin-bottom: 1.5rem;
-}
+.sim-control { margin-bottom: 1.5rem; }
 .sim-control label {
     font-weight: 600;
     display: block;
     margin-bottom: 0.5rem;
 }
-.sim-control input[type="range"] {
-    width: 100%;
-}
-.sim-control span {
-    font-size: 0.9rem;
-    font-weight: 600;
-}
+.sim-control input[type="range"] { width: 100%; }
+.sim-control span { font-size: 0.9rem; font-weight: 600; }
 
 .simulator-footer {
     padding: 1.5rem;
@@ -661,25 +549,15 @@ spline-viewer {
     cursor: pointer;
     transition: background-color 0.3s;
 }
-.simulator-footer #apply-changes-btn:hover {
-    background-color: #45a049;
-}
+.simulator-footer #apply-changes-btn:hover { background-color: #45a049; }
 #simulation-results {
     margin-top: 1rem;
     font-size: 0.9rem;
     text-align: left;
 }
-#simulation-results ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-#simulation-results li {
-    margin-bottom: 0.5rem;
-}
-#simulation-results strong {
-    color: var(--primary-color);
-}
+#simulation-results ul { list-style: none; padding: 0; margin: 0; }
+#simulation-results li { margin-bottom: 0.5rem; }
+#simulation-results strong { color: var(--primary-color); }
 #simulation-results .total-impact {
     font-weight: 700;
     margin-top: 1rem;
@@ -687,14 +565,68 @@ spline-viewer {
     border-top: 2px solid var(--border-color);
 }
 
-#mobile-launch-sim-btn {
-    display: none; /* Hidden on desktop */
+.share-scenario {
+    margin-top: 1rem;
+    display: flex;
+    gap: 10px;
+}
+#share-scenario-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.6rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+#share-scenario-btn:hover { background-color: var(--accent-color); }
+#share-link-input {
+    flex-grow: 1;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    padding: 0 10px;
+    font-size: 0.8rem;
+    background-color: #f0f0f0;
 }
 
+#mobile-launch-sim-btn { display: none; }
 
 /* --- Media Queries --- */
 @media (max-width: 768px) {
-    /* ... existing mobile styles ... */
+    main { padding-top: 70px; }
+    header { padding: 0 1rem; }
+    nav { height: 70px; }
+    
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: 60%;
+        max-width: 300px;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        transform: translateX(100%);
+        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+    .nav-links.is-active { transform: translateX(0); }
+    .nav-links li a { font-size: 1.2rem; }
+
+    .hamburger { display: block; z-index: 1001; }
+
+    .hero-content h1 { font-size: 2rem; }
+    #map { height: 400px; }
+
+    .cart-modal-content {
+        width: 90%;
+        margin: 30% auto;
+    }
 
     /* Simulator Bottom Sheet for Mobile */
     #simulator-panel {
@@ -707,23 +639,16 @@ spline-viewer {
         max-height: 550px;
         border-radius: 20px 20px 0 0;
         box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
-        transform: translateY(100%); /* Start hidden at bottom */
+        transform: translateY(100%);
     }
-    #simulator-panel.is-open {
-        transform: translateY(0);
-    }
-    .simulator-toggle-btn { /* Reposition close button */
-        top: 15px;
-        right: 15px;
-    }
+    .simulator-toggle-btn { top: 15px; right: 15px; }
 
-    /* Mobile Launch Button */
     #mobile-launch-sim-btn {
         display: block;
         position: fixed;
         bottom: 20px;
         right: 20px;
-        z-index: 1000;
+        z-index: 999;
         background-color: var(--primary-color);
         color: white;
         border: none;
@@ -735,29 +660,6 @@ spline-viewer {
     }
 }
 
-/* ADD these styles near the .simulator-header rule */
-.simulator-header {
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.simulator-header h2 {
-    margin: 0;
-    font-size: 1.3rem;
-    color: var(--primary-color);
-}
-.sim-city-selector label {
-    font-size: 0.8rem;
-    margin-right: 5px;
-}
-.sim-city-selector select {
-    padding: 5px;
-    border-radius: 5px;
-    border: 1px solid var(--border-color);
-}
-
 @media (min-width: 769px) {
     /* Simulator Right Panel for Desktop */
     #simulator-panel {
@@ -766,11 +668,7 @@ spline-viewer {
         width: 100%;
         max-width: 380px;
         height: 100vh;
-        transform: translateX(100%); /* Start hidden at right */
-    }
-    /* FIX: The close button is no longer hidden on desktop */
-    .simulator-toggle-btn {
-        display: block;
+        transform: translateX(100%);
     }
 
      #mobile-launch-sim-btn {
@@ -778,76 +676,15 @@ spline-viewer {
         position: fixed;
         top: 90px;
         right: 20px;
-        z-index: 1000;
+        z-index: 999;
         writing-mode: vertical-rl;
         text-orientation: mixed;
         padding: 1.5rem 1rem;
         border-radius: 10px 0 0 10px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        font-weight: 600;
+        cursor: pointer;
     }
 }
-<<<<<<< HEAD
-
-
-/* Add these new styles for simulator sharing */
-.share-scenario {
-    margin-top: 1rem;
-    display: flex;
-    gap: 10px;
-}
-
-#share-scenario-btn {
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    padding: 0.6rem 1rem;
-    border-radius: 20px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#share-scenario-btn:hover {
-    background-color: var(--accent-color);
-}
-
-#share-link-input {
-    flex-grow: 1;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    padding: 0 10px;
-    font-size: 0.8rem;
-    background-color: #f0f0f0;
-}
-
-
-/* --- NEW STYLES FOR POPUP ACTIONS --- */
-.popup-actions {
-    display: flex;
-    gap: 10px; /* Increased space between buttons */
-    margin-top: 12px;
-}
-
-.popup-btn {
-    flex: 1;
-    padding: 8px;
-    text-align: center;
-    text-decoration: none;
-    font-weight: 600;
-    color: #FFFFFF; /* Changed to pure white for better visibility */
-    background-color: #3B82F6; /* A modern, friendly blue for both buttons */
-    border-radius: 5px;
-    transition: background-color 0.2s ease, transform 0.2s ease;
-    border: none; /* Make it look more like a button */
-    cursor: pointer;
-}
-
-.popup-btn:hover {
-    background-color: #2563EB; /* A slightly darker blue for hover */
-    color: white;
-    transform: scale(1.05); /* Add a subtle hover effect */
-}
-
-/* Removed the .shop specific styles to make buttons identical */
-
-=======
->>>>>>> parent of eecc833 (share button)
